@@ -1,0 +1,1 @@
+export const GET_DETAILLIST = 'GET_DETAILLIST'
