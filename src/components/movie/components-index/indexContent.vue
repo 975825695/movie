@@ -1,6 +1,13 @@
 <template>
   <div class="index-content">
-    <p class="title">{{title}}</p>
+    <p class="title">{{title}}
+      <span v-if="chart">
+        <span :class="{active:clickYear===0}" @click="changeYear(0)">总排行</span>
+        <span :class="{active:clickYear===1}" @click="changeYear(1)">2017</span>
+        <span :class="{active:clickYear===2}" @click="changeYear(2)">2016</span>
+        <span :class="{active:clickYear===3}" @click="changeYear(3)">2015</span>
+      </span>
+    </p>
     <div class="content-list">
       <router-link :to="{path:`/detail/${item.id}`}" class="list" v-for="(item,index) in list" :key="index">
 
@@ -22,7 +29,9 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      list:[]
+      list:[],
+      chart:false,
+      clickYear:0
     }
   },
   props:{
@@ -34,8 +43,9 @@ export default {
       name = 'coming_soon'
     } else if (this.title === '正在热映'){
       name = 'in_theater'
-    } else if (this.title === '排行总榜'){
+    } else if (this.title === '排行榜'){
       name = 'top20'
+     this.chart = true
     }
     this.getData(name)
   },
@@ -46,6 +56,9 @@ export default {
         .then((response) => {
           this.list = response.data[0].subjects.splice(0,5)
       })
+    },
+    changeYear:function(year){
+      this.clickYear = year
     }
   },
   computed: {
@@ -63,6 +76,20 @@ export default {
       margin-left: 20px;
       padding-top: 20px;
       padding-bottom: 20px;
+      .active{
+        color: red;
+        text-decoration: underline;
+      }
+      span{
+        cursor: pointer;
+        // margin-left: 20px;
+        &:nth-of-type(1){
+          margin-left: 30px;
+        }
+        color:#000;
+        margin-left: 20px;
+        font-size: 20px;
+      }
     }
     .content-list{
       display: flex;
@@ -77,6 +104,9 @@ export default {
           display: inline-block;
           width: 180px;
           height: 200px;
+          background-image: url('../img/4042.jpg');
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
         }
         p:nth-of-type(1){
           width: 180px;
@@ -108,4 +138,5 @@ export default {
       }
     }
   }
+
 </style>

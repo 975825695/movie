@@ -9,7 +9,7 @@
       <router-link :to="{path:`/query/${query}`}">搜索</router-link>
     </div>
     <div class="header-nav">
-      <p>开通会员</p>
+      <p>我的社区</p>
       <p>播放记录</p>
       <router-link to='/login' v-show="!loginBool">登录/注册</router-link>
       <div v-show="loginBool" class="users">
@@ -79,6 +79,9 @@ export default {
       line-height: 80px;
       font-size: 20px;
       padding-right: 100px;
+      p{
+        cursor: pointer;
+      }
       p:nth-of-type(1){
         padding-left: 30px;
       }
@@ -135,12 +138,13 @@ export default {
           top: 50px;
           p{
           height: 40px;
-          background-color: #627085;
+          background-color: #eee;
           border-bottom: 1px solid #fff;
           cursor: pointer;
-          color: #fff;
+          color: #000;
           line-height: 40px;
           font-size: 15px;
+          text-align: center;
           padding-right: 10px;padding-right: none;
         }
         }
