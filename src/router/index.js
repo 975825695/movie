@@ -8,7 +8,9 @@ import query from '@/components/movie/query'
 import login from '@/components/movie/login'
 import vip from '@/components/movie/vip'
 import vipBuy from '@/components/movie/vipBuy'
+import record from '@/components/movie/record'
 
+import store from '@/store'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -19,6 +21,11 @@ export default new Router({
     {
       path: '/detail/:id',
       component: detail
+      // beforeEnter: (to, from, next) => {
+      //   const saveRecordId = store._actions.saveRecordId[0]
+      //   saveRecordId(to.params.id)
+      //   next()
+      // }
     },
     {
       path: '/query',
@@ -39,6 +46,10 @@ export default new Router({
     {
       path: '/vip',
       component: vip
+    },
+    {
+      path: '/record',
+      component: record
     }
   ]
 })

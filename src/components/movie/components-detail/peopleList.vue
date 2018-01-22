@@ -30,7 +30,6 @@ export default {
     // this.Loader()
     setTimeout(() => {
       this.list=this.detailList
-      console.log(this.list)
       let name = this.list.casts[0].name
       this.getCast(name)
       this.LoaderCtr('hidden')

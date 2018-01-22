@@ -9,8 +9,8 @@
       <router-link :to="{path:`/query/${query}`}">搜索</router-link>
     </div>
     <div class="header-nav">
-      <p>我的社区</p>
-      <p>播放记录</p>
+      <router-link :to="{path:'record'}">我的社区</router-link>
+      <router-link :to="{path:'record'}">播放记录</router-link>
       <router-link to='/login' v-show="!loginBool">登录/注册</router-link>
       <div v-show="loginBool" class="users">
          <p v-show="loginBool" class="hover">欢迎：{{name}}</p>

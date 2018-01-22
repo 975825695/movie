@@ -3,6 +3,7 @@
     <header-top></header-top>
     <header-nav></header-nav>
     <swiper></swiper>
+    <fast-info></fast-info>
     <index-content :title="titleArr[0]"></index-content>
     <index-content :title="titleArr[1]"></index-content>
     <index-content :title="titleArr[2]"></index-content>
@@ -16,6 +17,7 @@ import headerNav from './components-index/headerNav.vue'
 import swiper from './components-index/swiper.vue'
 import indexContent from './components-index/indexContent.vue'
 import footerCom from './components-index/footerCom.vue'
+import FastInfo from './components-index/FastInfo.vue'
 export default {
   data () {
     return {
@@ -27,7 +29,8 @@ export default {
     headerNav,
     swiper,
     indexContent,
-    footerCom
+    footerCom,
+    FastInfo
   }
 }
 </script>
