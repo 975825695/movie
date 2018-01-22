@@ -19,7 +19,7 @@ import footerCom from './components-index/footerCom.vue'
 export default {
   data () {
     return {
-      titleArr:['即将上映','正在热映','排行榜']
+      titleArr:['即将上映','正在热映','历史排行']
     }
   },
   components:{

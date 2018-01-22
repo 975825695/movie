@@ -22,7 +22,7 @@ router.post('/local/login/createAccount',(req,res) => {
         }
     });
 });
-// 获取已有账号接口
+// 登录
 router.post('/local/login/getAccount',(req,res) => {
     // 通过模型去查找数据库
     let newAccount = {
@@ -42,23 +42,34 @@ router.post('/local/login/getAccount',(req,res) => {
         }
     });
 });
-router.post('/local/login/updateAccount',(req,res) => {
-  // 这里的req.body能够使用就在index.js中引入了const bodyParser = require('body-parser')
+// 查询是否有VIP权限
+router.post('/local/login/getVIP',(req,res) => {
+  // 通过模型去查找数据库
   let newAccount = {
-      account : req.body.account,
-      password : req.body.password
+    account : req.body.account
   };
-  // 保存数据newAccount数据进mongoDB
-  console.log(req.body.accountOld)
-  models.Login.update({account:req.body.accountOld},{$set:newAccount},(err,data) => {
+  models.Login.find(newAccount,(err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
+          res.send(data[0])
+      }
+  });
+});
+// vip购买
+router.post('/local/login/updateAccount',(req,res) => {
+  let newAccount = {
+      vip : req.body.vip
+  };
+  models.Login.update({account:req.body.account},{$set:newAccount},(err,data) => {
       if (err) {
           res.send(err);
       } else {
           res.send(data);
-          console.log(data)
       }
   });
 });
+
 router.post('/local/login/delAccount',(req,res) => {
   // 保存数据newAccount数据进mongoDB
   console.log(req.body.accountOld)

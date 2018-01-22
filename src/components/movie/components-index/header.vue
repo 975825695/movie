@@ -30,8 +30,7 @@ export default {
     return {
       query:'',
       loginBool:false,
-      name:'',
-      vipBool:false
+      name:''
     }
   },
   created () {
@@ -43,23 +42,40 @@ export default {
     } else {
       this.loginBool = false
     }
-    if (vip===0) {
-      this.vipBool = false
-    } else if (vip===1) {
-      this.vipBool = true
-    }
   },
   methods:{
     logout:function(){
        sessionStorage.removeItem('name');
        window.location.href='/'
     },
-    toVip:function(){
-      if (!this.vipBool){
-        window.location.href = '#/vipBuy'
+    toVip:async function(){
+      const loginvalid =  this.loginValid()
+      if (loginvalid) {
+        const name = sessionStorage.getItem("name");
+        let params = {
+          account : name
+        }
+        axios.post('/local/login/getVip',params)
+          .then((response) => {
+            const vip = response.data.vip
+            if (vip === 0){
+              window.location.href = '#/vipBuy'
+            } else {
+              window.location.href = '#/vip'
+            }
+        })
       } else {
-        window.location.href = '#/vip'
+        alert('请先登录')
+        window.location.href = '#/login'
       }
+    },
+    loginValid:function () {
+       const name = sessionStorage.getItem("name");
+       if (name) {
+         return true
+       } else {
+         return false
+       }
     }
   }
 }

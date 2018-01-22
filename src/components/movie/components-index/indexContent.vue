@@ -3,9 +3,9 @@
     <p class="title">{{title}}
       <span v-if="chart">
         <span :class="{active:clickYear===0}" @click="changeYear(0)">总排行</span>
-        <span :class="{active:clickYear===1}" @click="changeYear(1)">2017</span>
-        <span :class="{active:clickYear===2}" @click="changeYear(2)">2016</span>
-        <span :class="{active:clickYear===3}" @click="changeYear(3)">2015</span>
+        <span :class="{active:clickYear==='2010'}" @click="changeYear('2010')">2010</span>
+        <span :class="{active:clickYear==='2008'}" @click="changeYear('2008')">2008</span>
+        <span :class="{active:clickYear==='2002'}" @click="changeYear('2002')">2002</span>
       </span>
     </p>
     <div class="content-list">
@@ -43,7 +43,7 @@ export default {
       name = 'coming_soon'
     } else if (this.title === '正在热映'){
       name = 'in_theater'
-    } else if (this.title === '排行榜'){
+    } else if (this.title === '历史排行'){
       name = 'top20'
      this.chart = true
     }
@@ -59,6 +59,26 @@ export default {
     },
     changeYear:function(year){
       this.clickYear = year
+      if (year === 0) {
+        axios.post('/vv/movie/top20',{})
+          .then((response) => {
+            this.list = response.data[0].subjects.splice(0,5)
+        })
+      } else {
+        axios.post('/vv/movie/top20',{})
+        .then((response) => {
+          const topList =  response.data[2].subjects
+          let arr = []
+          for (const key in topList) {
+            if (topList[key].year === year) {
+                arr.push(topList[key])
+                // console.log(1)
+            }
+          }
+          this.list = arr.splice(0,5)
+          console.log(this.list)
+      })
+      }
     }
   },
   computed: {

@@ -3,10 +3,10 @@
     <div class="card">
       <div class="list" v-for="(item,index) in countList" :key="index">
         <div class="desc">
-            <p><span>{{item.price}}</span>元/月</p>
-            <p>赠送观影券<span>{{item.count}}</span>张</p>
+            <p><span>{{item.price}}</span>元/{{item.num}}月</p>
+            <p>赠送观影券<span>{{item.num}}</span>张</p>
         </div>
-        <button>立即开通</button>
+        <button @click="buyVip()">立即开通</button>
       </div>
     </div>
   </section>
@@ -17,12 +17,32 @@
 export default {
   data () {
     return {
-      countList:[{price:15,num:2},{price:25,num:3},{price:35,num:4},{price:45,num:5},{price:55,num:6}]
+      countList:[{price:15,num:1},{price:25,num:2},{price:35,num:3},{price:45,num:4},{price:55,num:5}]
     }
   },
   created () {
   },
+  methods: {
+    buyVip:function () {
+      const cf = confirm("确认购买吗")
+      if (cf) {
+        const name = sessionStorage.getItem("name");
+        let params = {
+            account : name,
+            vip : 1
+        }
+        axios.post('/local/login/updateAccount',params)
+        .then((response) => {
+          // 响应成功回调
+          if (response.data.n ===1 ) {
+               window.location.href = '#/vip'
+          }
+        })
+      } else {
 
+      }
+    }
+  }
 }
 </script>
 
