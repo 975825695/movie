@@ -12,7 +12,8 @@ mongoose.connect('mongodb://localhost/vue-node',(err)=>{
 const loginSchema = mongoose.Schema({
     account : String,
     password : String,
-    vip: Number
+    vip: Number,
+    name: String
 });
 const Coming_soonSchema = mongoose.Schema({
 });

@@ -7,5 +7,8 @@ export default {
   },
   [types.SAVE_RECORDID] (state, data) {
     state.recordIdList.push(data)
+  },
+  [types.GET_USERINFO] (state, data) {
+    state.userInfo = data
   }
 }

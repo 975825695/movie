@@ -10,7 +10,8 @@ router.post('/local/login/createAccount',(req,res) => {
     let newAccount = new models.Login({
         account : req.body.account,
         password : req.body.password,
-        vip:0
+        vip:0,
+        name:'新用户'
     });
     // 保存数据newAccount数据进mongoDB
     newAccount.save((err,data) => {
@@ -33,7 +34,7 @@ router.post('/local/login/getAccount',(req,res) => {
             res.send(err);
         } else {
           if(data[0].password===req.body.password){
-            const list = {retCode:1,vip:data[0].vip}
+            const list = {retCode:1,vip:data[0].vip,name:data[0].name,account:data[0].account}
             res.send(list);
           }else{
             const list = {retCode:2}
@@ -41,6 +42,33 @@ router.post('/local/login/getAccount',(req,res) => {
           }
         }
     });
+});
+//查询账号信息
+router.post('/local/login/queryAccount',(req,res) => {
+  let newAccount = {
+    account : req.body.account
+  };
+  models.Login.find(newAccount,(err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
+          res.send(data)
+      }
+  });
+});
+// 修改账号信息
+router.post('/local/login/updateUser',(req,res) => {
+  let newAccount = {
+      name : req.body.name,
+      password : req.body.password
+  };
+  models.Login.update({account:req.body.account},{$set:newAccount},(err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
+          res.send(data);
+      }
+  });
 });
 // 查询是否有VIP权限
 router.post('/local/login/getVIP',(req,res) => {

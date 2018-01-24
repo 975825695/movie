@@ -20,8 +20,8 @@ export default {
   components:{
     headerTop,
     headerNav,
-    detail,
-    footerCom
+    footerCom,
+    detail
   }
 }
 </script>

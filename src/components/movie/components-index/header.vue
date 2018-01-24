@@ -9,13 +9,13 @@
       <router-link :to="{path:`/query/${query}`}">搜索</router-link>
     </div>
     <div class="header-nav">
-      <router-link :to="{path:'record'}">我的社区</router-link>
+      <!-- <router-link :to="{path:'record'}">我的社区</router-link> -->
       <router-link :to="{path:'record'}">播放记录</router-link>
       <router-link to='/login' v-show="!loginBool">登录/注册</router-link>
       <div v-show="loginBool" class="users">
          <p v-show="loginBool" class="hover">欢迎：{{name}}</p>
          <div class="user-func">
-           <p>个人中心</p>
+           <router-link :to="{path:'personal'}">个人中心</router-link>
            <p @click="logout">注销</p>
          </div>
       </div>
@@ -152,7 +152,8 @@ export default {
           display: none;
           position: absolute;
           top: 50px;
-          p{
+          p,a{
+          display: inline-block;
           height: 40px;
           background-color: #eee;
           border-bottom: 1px solid #fff;

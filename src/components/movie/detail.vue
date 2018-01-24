@@ -4,6 +4,7 @@
     <detail-video></detail-video>
     <video-desc></video-desc>
     <people-list></people-list>
+    <comment></comment>
     <footer-com></footer-com>
   </div>
 </template>
@@ -12,6 +13,7 @@ import headerNav from './components-index/headerNav.vue'
 import detailVideo from './components-detail/detailVideo.vue'
 import videoDesc from './components-detail/videoDesc.vue'
 import peopleList from './components-detail/peopleList.vue'
+import comment from './components-detail/comment.vue'
 import footerCom from './components-index/footerCom.vue'
 import { mapState, mapActions } from 'vuex'
 export default {
@@ -37,6 +39,7 @@ export default {
     detailVideo,
     videoDesc,
     peopleList,
+    comment,
     footerCom
   }
 }

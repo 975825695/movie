@@ -9,6 +9,7 @@ import login from '@/components/movie/login'
 import vip from '@/components/movie/vip'
 import vipBuy from '@/components/movie/vipBuy'
 import record from '@/components/movie/record'
+import personal from '@/components/movie/personal'
 
 import store from '@/store'
 Vue.use(Router)
@@ -50,6 +51,10 @@ export default new Router({
     {
       path: '/record',
       component: record
+    },
+    {
+      path: '/personal',
+      component:personal,
     }
   ]
 })
