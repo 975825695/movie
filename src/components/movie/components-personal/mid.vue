@@ -4,7 +4,7 @@
     <div class="myPass" v-if="isOn===1">
       <div class="detail">
         <div class="img">
-          <img src="" alt="">
+          <img :src="photoUrl" alt="">
         </div>
         <div class="pass">
           <p>通行证：{{userInfo.account}}</p>
@@ -18,17 +18,20 @@
       </div>
       <div class="update">
         <p>修改密码</p>
-        <input type="text" placeholder="新用户名" v-model="name" maxlength="6">
+        <input type="text" placeholder="新用户名1-6位" v-model="name" maxlength="6" >
         <input type="text" placeholder="原密码" v-model="oldPwd" maxlength="6">
-        <input type="text" placeholder="新密码" v-model="newPwd" maxlength="6">
-        <input type="text" placeholder="再次输入" v-model="rePwd" maxlength="6">
+        <input type="text" placeholder="新密码1-6位" v-model="newPwd" maxlength="6">
+        <input type="text" placeholder="再次输入" v-model="rePwd" maxlength="6" @blur="ccap()">
+        <span>{{message}}</span>
       </div>
       <div class="confirm">
         <p @click="updateAccount()">提交修改</p>
       </div>
     </div>
-    <div class="" v-if="isOn===3">
-      3
+    <div class="upLoad" v-if="isOn===3">
+        <img :src="photoUrl" alt="">
+        <input type="file" name="photo" @change="upLoadFile">
+        <p @click="upLoadImg()">上传</p>
     </div>
     <div>
     </div>
@@ -47,7 +50,10 @@ export default {
       name:'',
       oldPwd:'',
       newPwd:'',
-      rePwd:''
+      rePwd:'',
+      message:'',
+      photo:'',
+      photoUrl:''
     }
   },
   props:{
@@ -57,6 +63,8 @@ export default {
     ...mapState(['userInfo']),
   },
   created () {
+    console.log(this.userInfo)
+    this.photoUrl = '../../'+this.userInfo.photo
   },
   watch:{
     isON(cur,old){
@@ -73,7 +81,8 @@ export default {
   },
   methods:{
     init:function(){
-      this.userList = this.userInfo
+      // this.userList = this.userInfo
+
     },
     updateAccount:function(){
       let params = {
@@ -91,6 +100,34 @@ export default {
           })
         }
       }
+    },
+    ccap:function(){
+      if (this.newPwd !== this.rePwd) {
+        this.message = '两次输入不一致!'
+      } else {
+        this.message = ''
+      }
+    },
+    // 这个地方转了base64要注意
+    upLoadFile:function(e){
+      const file = e.target.files || e.dataTransfer.files
+      if (!file.length) return
+      const reader = new FileReader()
+      reader.readAsDataURL(file[0])
+      let _this = this
+      reader.onload= function(e){
+        _this.photoUrl = this.result
+      }
+      this.photo = file[0]
+    },
+    upLoadImg:function(){
+      let form = new FormData()
+      form.append('photo',this.photo)
+      form.append('account',this.userInfo.account)
+      axios.post('/local/login/upImg',form,{headers:{'Content-Type':'multipart/form-data'}})
+        .then((response) => {
+          alert('上传成功！')
+      })
     }
   },
   components:{
@@ -166,6 +203,7 @@ export default {
         align-items: center;
         flex-direction: column;
         p{
+          margin-top: 20px;
           font-size: 22px;
           text-align: center;
         }
@@ -173,7 +211,14 @@ export default {
           width: 300px;
           font-size: 22px;
           text-align: center;
-          margin-top: 30px;
+          margin-top: 20px;
+        }
+        span{
+          display: inline-block;
+          text-align: center;
+          font-size: 22px;
+          margin-top: 10px;
+          color:red;
         }
       }
       .confirm{
@@ -185,7 +230,7 @@ export default {
           font-size: 22px;
           text-align: center;
           width: 150px;
-          margin-top: 30px;
+          margin-top: 20px;
           color: #000;
           height: 30px;
           line-height: 30px;
@@ -193,6 +238,35 @@ export default {
           background-color: #ccc;
         }
       }
+    }
+    .upLoad{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+        img{
+          margin-top: 20px;
+          display: inline-block;
+          width: 200px;
+          height: 200px;
+          background-color: #ccc;
+        }
+        input{
+          text-align: center;
+          width: 200px;
+          font-size: 20px;
+          margin-top: 20px;
+        }
+        p{
+          font-size: 22px;
+          text-align: center;
+          background-color: #ccc;
+          width: 100px;
+          margin-top: 20px;
+          height: 30px;
+          line-height: 30px;
+          cursor: pointer;
+        }
     }
   }
 </style>

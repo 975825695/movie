@@ -13,7 +13,8 @@ const loginSchema = mongoose.Schema({
     account : String,
     password : String,
     vip: Number,
-    name: String
+    name: String,
+    photo: String
 });
 const Coming_soonSchema = mongoose.Schema({
 });

@@ -1,6 +1,10 @@
 const models = require('./db');
 const express = require('express');
 const router = express.Router();
+const formidable = require('formidable');
+const path = require('path');
+const fs = require('fs');
+
 
 /************** 创建(create) 读取(get) 更新(update) 删除(delete) **************/
 
@@ -69,6 +73,38 @@ router.post('/local/login/updateUser',(req,res) => {
           res.send(data);
       }
   });
+});
+// 上传头像
+router.post('/local/login/upImg',(req,res) => {
+  // let newAccount = {
+  //     photo:res.body.photo
+  // };
+  let upLoadDir = '../../static/upImg/'
+  let form = new formidable.IncomingForm()
+  form.uploadDir = upLoadDir
+  // form.uploadDir = uploadDir
+  form.parse(req,function(err,fields,files){
+    let file = files.photo
+    let oldpath = path.normalize(file.path)
+    let newFileName = 'movie'+file.name
+    let newpath = upLoadDir+newFileName
+    fs.rename(oldpath,newpath,function(err){
+      if(err){
+        res.end(err)
+      } else {
+        let newAccount = {
+          photo : newpath
+        }
+        models.Login.update({account:fields.account},{$set:newAccount},(err,data) => {
+          if (err) {
+              res.send(err);
+          } else {
+              res.send(data);
+          }
+        });
+      }
+    })
+  })
 });
 // 查询是否有VIP权限
 router.post('/local/login/getVIP',(req,res) => {
