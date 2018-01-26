@@ -10,6 +10,7 @@ import vip from '@/components/movie/vip'
 import vipBuy from '@/components/movie/vipBuy'
 import record from '@/components/movie/record'
 import personal from '@/components/movie/personal'
+import community from '@/components/movie/community'
 
 import store from '@/store'
 Vue.use(Router)
@@ -55,6 +56,10 @@ export default new Router({
     {
       path: '/personal',
       component:personal,
+    },
+    {
+      path: '/community',
+      component:community,
     }
   ]
 })

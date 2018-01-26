@@ -65,7 +65,6 @@ export default {
     .right{
       width:200px;
       height: 500px;
-      border: 1px solid #000;
     }
   }
   .isOn{

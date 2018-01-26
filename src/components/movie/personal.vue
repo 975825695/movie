@@ -3,7 +3,7 @@
     <header>
       <div class="userWel">
         <router-link to="/">回到首页</router-link>
-        <p>欢迎您|{{name}}</p>
+        <p>欢迎您 | {{name}}</p>
       </div>
     </header>
     <contents></contents>

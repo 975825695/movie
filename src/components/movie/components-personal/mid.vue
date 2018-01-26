@@ -62,9 +62,17 @@ export default {
   computed:{
     ...mapState(['userInfo']),
   },
-  created () {
-    console.log(this.userInfo)
+  beforeUpdate () {
     this.photoUrl = '../../'+this.userInfo.photo
+  },
+  // updated () {
+  //   this.photoUrl = '../../'+this.userInfo.photo
+  //   console.log(2,this.userInfo.photo)
+  // },
+  mounted () {
+    // console.log(this.userInfo)
+    // console.log(3,this.userInfo.photo)
+    // this.photoUrl = '../../'+this.userInfo.photo
   },
   watch:{
     isON(cur,old){

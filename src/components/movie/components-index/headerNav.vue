@@ -3,18 +3,7 @@
     <div class="nav-ul">
       <ul>
         <router-link to="/">首页</router-link>
-        <router-link to="/">大片</router-link>
-        <router-link to="/">港片</router-link>
-        <router-link to="/">欧美</router-link>
-        <router-link to="/">独家</router-link>
-        <router-link to="/">内地</router-link>
-        <router-link to="/">CCTV6</router-link>
-      </ul>
-      <ul>
-        <router-link to="/">主题片场</router-link>
-        <router-link to="/">艺术电影</router-link>
-        <router-link to="/">网络电影</router-link>
-        <router-link to="/">排行榜</router-link>
+        <router-link to="/community">影评社区</router-link>
       </ul>
     </div>
   </nav>
@@ -43,8 +32,7 @@ export default {
     }
     ul{
       display: flex;
-      align-content: center;
-      justify-content: center;
+      justify-content: space-between;
       // height: 60px;
       a{
         color: #fff;
@@ -57,17 +45,10 @@ export default {
         }
       }
     }
-    ul:nth-of-type(1){
+    ul{
       a{
         width: 100px;
         font-size: 16px;
-      }
-    }
-    ul:nth-of-type(2){
-      a{
-        width: 70px;
-        font-size: 14px;
-        font-size: #ccc;
       }
     }
   }
