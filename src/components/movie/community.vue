@@ -1,6 +1,7 @@
 <template>
   <div class="community">
     <header-top></header-top>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -11,14 +12,18 @@ export default {
     return {
     }
   },
+  created () {
+  },
+  methods: {
+  },
   components:{
-    headerTop,
+    headerTop
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .community{
+.community{
     width:100%;
     height: 100%;
     display: flex;
@@ -26,3 +31,4 @@ export default {
     align-items: center;
   }
 </style>
+

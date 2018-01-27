@@ -9,9 +9,9 @@
          <input type="text" placeholder="搜索文章">
          <p>搜索</p>
       </div>
-      <router-link :to="{path:'/'}">写文章</router-link>
+      <router-link :to="{path:'/community/write'}">写文章</router-link>
       <div class="userWel">
-        欢迎你 | XXX
+        欢迎你 | {{username}}
       </div>
     </div>
   </header>
@@ -22,12 +22,17 @@
 export default {
   data () {
     return {
+      username:''
     }
   },
   created () {
+    this.getData()
   },
   methods: {
-
+    getData:function(){
+      let username = sessionStorage.getItem('name');
+      this.username = username
+    }
   }
 }
 </script>
@@ -41,7 +46,6 @@ header{
     align-items: center;
     justify-content: center;
     .head{
-        border: 1px solid #ccc;
       width: 1024px;
       height: 80px;
       display: flex;
@@ -78,7 +82,7 @@ header{
           line-height: 40px;
           text-align: center;
           border: none;
-          background-color: #eee;
+          background-color:rgba($color: #eee, $alpha: 0.6);
           &::placeholder{
             color:#ccc;
           }
@@ -90,7 +94,7 @@ header{
           cursor: pointer;
           line-height: 40px;
           color: #aaa;
-          background-color: #eee;
+          background-color:rgba($color: #eee, $alpha: 0.6);
         }
       }
       a{

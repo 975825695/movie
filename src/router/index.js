@@ -11,6 +11,8 @@ import vipBuy from '@/components/movie/vipBuy'
 import record from '@/components/movie/record'
 import personal from '@/components/movie/personal'
 import community from '@/components/movie/community'
+import communityIndex from '@/components/movie/components-community/index'
+import communityWrite from '@/components/movie/components-community/write'
 
 import store from '@/store'
 Vue.use(Router)
@@ -60,6 +62,10 @@ export default new Router({
     {
       path: '/community',
       component:community,
+      children:[
+        {path:'',component:communityIndex},
+        {path:'write',component:communityWrite},
+      ]
     }
   ]
 })
