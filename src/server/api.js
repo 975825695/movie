@@ -15,7 +15,8 @@ router.post('/local/login/createAccount',(req,res) => {
         account : req.body.account,
         password : req.body.password,
         vip:0,
-        name:'新用户'
+        name:'新用户',
+        document:[]
     });
     // 保存数据newAccount数据进mongoDB
     newAccount.save((err,data) => {
@@ -133,6 +134,19 @@ router.post('/local/login/updateAccount',(req,res) => {
       }
   });
 });
+// 写文章 存储
+router.post('/local/login/insertDocument',(req,res) => {
+  let document = req.body.html
+  models.Login.update({account:req.body.account},{$push:{document:document}},(err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
+          res.send(data);
+      }
+  });
+});
+
+
 
 router.post('/local/login/delAccount',(req,res) => {
   // 保存数据newAccount数据进mongoDB

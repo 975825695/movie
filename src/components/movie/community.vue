@@ -2,11 +2,13 @@
   <div class="community">
     <header-top></header-top>
     <router-view></router-view>
+    <footer-com></footer-com>
   </div>
 </template>
 
 <script>
 import headerTop from './components-community/header.vue'
+import footerCom from './components-index/footerCom.vue'
 export default {
   data () {
     return {
@@ -17,7 +19,8 @@ export default {
   methods: {
   },
   components:{
-    headerTop
+    headerTop,
+    footerCom
   }
 }
 </script>

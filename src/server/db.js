@@ -14,7 +14,8 @@ const loginSchema = mongoose.Schema({
     password : String,
     vip: Number,
     name: String,
-    photo: String
+    photo: String,
+    document: Array
 });
 const Coming_soonSchema = mongoose.Schema({
 });
