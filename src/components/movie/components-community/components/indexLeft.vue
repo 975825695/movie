@@ -7,9 +7,9 @@
     </div>
     <div class="contentList" v-for="(list,index) in List" :key="index">
       <div class="userInfo">
-        <p>{{list.account}}</p>
+        <p>{{list.name}}</p>
         <p>{{list.time}}</p>
-        <p><span v-for="(item,index) in list.document.tags" :key="index">{{item}}|</span></p>
+        <p><span v-for="(item,index) in list.document.tags" :key="index">{{item}}</span></p>
       </div>
       <div class="title">
         {{list.document.title}}
@@ -49,7 +49,6 @@ export default {
        axios.post('/local/login/queryDocuments',params)
         .then((response) => {
           this.List = response.data
-          console.log(this.List[0].document.tags)
        })
     }
   }
@@ -84,17 +83,23 @@ section{
       width: 100%;
       .userInfo{
         padding-top: 15px;
-        width: 300px;
+        width: 400px;
         display: flex;
         p{
           color: #ccc;
           font-size: 14px;
+          width: 100px;
           white-space:nowrap;
           text-overflow:ellipsis;
           overflow: hidden;
         }
         p:nth-of-type(1){
           margin-left: 20px;
+        }
+        p:nth-of-type(3){
+          span{
+            padding-left: 5px;
+          }
         }
       }
       .title{

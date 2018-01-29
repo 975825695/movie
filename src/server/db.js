@@ -24,7 +24,7 @@ const In_theaterSchema = mongoose.Schema({
 const Top20Schema = mongoose.Schema({
 });
 const Documentchema = mongoose.Schema({
-  account : String,
+  name : String,
   time : String,
   document: Object
 });

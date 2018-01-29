@@ -78,7 +78,9 @@ export default {
         if(this.fight){
           tag.push('战争')
         }
+        let name = sessionStorage.getItem('name')
         let account = sessionStorage.getItem('account')
+        let time = new Date()
         let html = {
           title:this.title,
           selectedName:this.selected,
@@ -86,7 +88,8 @@ export default {
         }
         let params = {
           account:account,
-          time:'1天前',
+          name:name,
+          time:time,
           html:html
         }
         axios.post('/local/login/saveDocuments',params)
@@ -95,11 +98,11 @@ export default {
         .then(
           axios.post('/local/login/insertDocOne',params)
           .then((response) => {
-            console.log(response)
             if(response.data.n!==0){
               window.location.href = '#/community'
             }
-        }))
+        })
+        )
       }
     }
   },

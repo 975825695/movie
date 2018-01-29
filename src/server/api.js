@@ -4,6 +4,7 @@ const router = express.Router();
 const formidable = require('formidable');
 const path = require('path');
 const fs = require('fs');
+const moment = require('moment');
 
 
 /************** 创建(create) 读取(get) 更新(update) 删除(delete) **************/
@@ -149,7 +150,7 @@ router.post('/local/login/insertDocOne',(req,res) => {
 router.post('/local/login/saveDocuments',(req,res) => {
   let document = req.body.html
   let DocumentList = new models.Document({
-    account : req.body.account,
+    name : req.body.name,
     time : req.body.time,
     document:document
   });
@@ -167,6 +168,8 @@ router.post('/local/login/queryDocuments',(req,res) => {
       if (err) {
           res.send(err);
       } else {
+          data.sort((a,b)=>a.time<b.time)
+          data.map(a=>a.time = moment(a.time).startOf('day').fromNow());
           res.send(data)
       }
   });
