@@ -5,18 +5,18 @@
       <p>最新 |</p>
       <p>评论</p>
     </div>
-    <div class="contentList" v-for="(list,index) in contentList" :key="index">
+    <div class="contentList" v-for="(list,index) in List" :key="index">
       <div class="userInfo">
-        <p>{{list.username}}</p>
-        <p>{{list.datetime}}</p>
-        <p>{{list.keyword}}</p>
+        <p>{{list.account}}</p>
+        <p>{{list.time}}</p>
+        <p><span v-for="(item,index) in list.document.tags" :key="index">{{item}}|</span></p>
       </div>
       <div class="title">
-        {{list.title}}
+        {{list.document.title}}
       </div>
       <div class="icons">
-        <p>点赞数：{{list.zan}}</p>
-        <p>评论数：{{list.comment}}</p>
+        <p>点赞数：1</p>
+        <p>评论数：2</p>
       </div>
     </div>
   </section>
@@ -35,30 +35,23 @@ export default {
           title:'关于程序员的一点感想',
           zan:'2',
           comment:'4'
-        },
-        {
-          username:'令狐冲',
-          datetime:'三天前',
-          keyword:'Node.js',
-          title:'关于程序员的一点感想',
-          zan:'2',
-          comment:'4'
-        },
-        {
-          username:'蒋王爷',
-          datetime:'二天前',
-          keyword:'Node.js',
-          title:'关于程序员的一点感想',
-          zan:'2',
-          comment:'4'
         }
-        ]
+        ],
+      List:[]
     }
   },
   created () {
+    this.getData()
   },
   methods: {
-
+    getData:function(){
+      let params = {}
+       axios.post('/local/login/queryDocuments',params)
+        .then((response) => {
+          this.List = response.data
+          console.log(this.List[0].document.tags)
+       })
+    }
   }
 }
 </script>

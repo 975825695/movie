@@ -23,6 +23,11 @@ const In_theaterSchema = mongoose.Schema({
 });
 const Top20Schema = mongoose.Schema({
 });
+const Documentchema = mongoose.Schema({
+  account : String,
+  time : String,
+  document: Object
+});
 
 /************** 定义模型Model **************/
 const Models = {
@@ -30,6 +35,7 @@ const Models = {
     Coming_soon : mongoose.model('coming_soon',Coming_soonSchema),
     In_theater : mongoose.model('in_theater',In_theaterSchema),
     Top20 : mongoose.model('top20',Top20Schema),
+    Document : mongoose.model('document',Documentchema),
 }
 
 module.exports = Models;

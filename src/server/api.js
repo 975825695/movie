@@ -134,8 +134,8 @@ router.post('/local/login/updateAccount',(req,res) => {
       }
   });
 });
-// 写文章 存储
-router.post('/local/login/insertDocument',(req,res) => {
+// 写文章 存储到每个人的信息中
+router.post('/local/login/insertDocOne',(req,res) => {
   let document = req.body.html
   models.Login.update({account:req.body.account},{$push:{document:document}},(err,data) => {
       if (err) {
@@ -145,6 +145,33 @@ router.post('/local/login/insertDocument',(req,res) => {
       }
   });
 });
+// 写文章存到所有文章列表
+router.post('/local/login/saveDocuments',(req,res) => {
+  let document = req.body.html
+  let DocumentList = new models.Document({
+    account : req.body.account,
+    time : req.body.time,
+    document:document
+  });
+  DocumentList.save((err,data) => {
+    if (err) {
+        res.send(err);
+    } else {
+        res.send(data);
+    }
+  });
+});
+//查询所有文章
+router.post('/local/login/queryDocuments',(req,res) => {
+  models.Document.find((err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
+          res.send(data)
+      }
+  });
+});
+
 
 
 

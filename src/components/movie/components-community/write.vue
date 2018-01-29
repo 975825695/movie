@@ -86,15 +86,20 @@ export default {
         }
         let params = {
           account:account,
+          time:'1天前',
           html:html
         }
-        axios.post('/local/login/insertDocument',params)
+        axios.post('/local/login/saveDocuments',params)
         .then((response) => {
-          console.log(response)
-          if(response.data.n!==0){
-            window.location.href = '#/community'
-          }
         })
+        .then(
+          axios.post('/local/login/insertDocOne',params)
+          .then((response) => {
+            console.log(response)
+            if(response.data.n!==0){
+              window.location.href = '#/community'
+            }
+        }))
       }
     }
   },
