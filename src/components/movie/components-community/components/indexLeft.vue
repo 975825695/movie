@@ -33,7 +33,7 @@ export default {
           datetime:'一天前',
           keyword:'Node.js',
           title:'关于程序员的一点感想',
-          zan:'2',
+          zan:'3',
           comment:'4'
         }
         ],
