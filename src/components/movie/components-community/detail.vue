@@ -1,12 +1,12 @@
 <template>
   <div class="main">
-    <index-left class="index_left"></index-left>
+    <detail-left class="index_left"></detail-left>
     <index-right class="index_right"></index-right>
   </div>
 </template>
 
 <script>
-import indexLeft from './components/indexLeft.vue'
+import detailLeft from './components/detailLeft.vue'
 import indexRight from './components/indexRight.vue'
 export default {
   data () {
@@ -18,7 +18,7 @@ export default {
   methods: {
   },
   components:{
-    indexLeft,
+    detailLeft,
     indexRight
   }
 }

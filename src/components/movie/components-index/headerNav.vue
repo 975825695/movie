@@ -3,7 +3,7 @@
     <div class="nav-ul">
       <ul>
         <router-link to="/">首页</router-link>
-        <router-link to="/community">影评社区</router-link>
+        <router-link to="/community" @click.native="valiLogin()">影评社区</router-link>
       </ul>
     </div>
   </nav>
@@ -11,7 +11,17 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  methods:{
+    valiLogin:function(){
+      let account = sessionStorage.getItem('account')
+      console.log(account)
+      if(!account) {
+        alert('请先登录')
+        window.location.href = '#/login'
+      }
+    }
+  }
 }
 </script>
 

@@ -46,6 +46,7 @@ export default {
   methods:{
     logout:function(){
        sessionStorage.removeItem('name');
+       sessionStorage.removeItem('account');
        window.location.href='/'
     },
     toVip:async function(){

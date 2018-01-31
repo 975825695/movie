@@ -13,6 +13,7 @@ import personal from '@/components/movie/personal'
 import community from '@/components/movie/community'
 import communityIndex from '@/components/movie/components-community/index'
 import communityWrite from '@/components/movie/components-community/write'
+import communityDetail from '@/components/movie/components-community/detail'
 
 import store from '@/store'
 Vue.use(Router)
@@ -62,9 +63,14 @@ export default new Router({
     {
       path: '/community',
       component:community,
+      // beforeEnter: (to, from, next) => {
+      //   let account = sessionStorage.getItem('account')
+      //   // next()
+      // },
       children:[
         {path:'',component:communityIndex},
         {path:'write',component:communityWrite},
+        {path:'detail/:id',component:communityDetail}
       ]
     }
   ]

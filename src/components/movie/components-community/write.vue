@@ -36,6 +36,7 @@
 
 <script>
 import editor from 'wangeditor'
+import moment from 'moment'
 export default {
   data () {
     return {
@@ -81,7 +82,9 @@ export default {
         let name = sessionStorage.getItem('name')
         let account = sessionStorage.getItem('account')
         let time = new Date()
+        time = moment(time).format()
         let html = {
+          content:this.ediTor.txt.html(),
           title:this.title,
           selectedName:this.selected,
           tags:tag

@@ -5,7 +5,7 @@
       <p>最新 |</p>
       <p>评论</p>
     </div>
-    <div class="contentList" v-for="(list,index) in List" :key="index">
+    <div class="contentList" v-for="(list,index) in List" :key="index" @click="ToDetail(list._id)">
       <div class="userInfo">
         <p>{{list.name}}</p>
         <p>{{list.time}}</p>
@@ -50,6 +50,9 @@ export default {
         .then((response) => {
           this.List = response.data
        })
+    },
+    ToDetail:function(id){
+      window.location.href = `#/community/detail/${id}`
     }
   }
 }
@@ -88,7 +91,7 @@ section{
         p{
           color: #ccc;
           font-size: 14px;
-          width: 100px;
+          width: 150px;
           white-space:nowrap;
           text-overflow:ellipsis;
           overflow: hidden;
@@ -98,7 +101,7 @@ section{
         }
         p:nth-of-type(3){
           span{
-            padding-left: 5px;
+            padding-left: 20px;
           }
         }
       }

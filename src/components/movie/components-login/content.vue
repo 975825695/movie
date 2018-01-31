@@ -57,6 +57,7 @@ export default {
             sessionStorage.setItem("name", response.data.name);
             sessionStorage.setItem("vip", response.data.vip);
             sessionStorage.setItem("account", response.data.account);
+            sessionStorage.setItem("photo", response.data.photo);
             window.location.href = '/'
           } else if (response.data.retCode === 2) {
             alert('密码错误')

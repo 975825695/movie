@@ -40,7 +40,7 @@ router.post('/local/login/getAccount',(req,res) => {
             res.send(err);
         } else {
           if(data[0].password===req.body.password){
-            const list = {retCode:1,vip:data[0].vip,name:data[0].name,account:data[0].account}
+            const list = {retCode:1,vip:data[0].vip,name:data[0].name,account:data[0].account,photo:data[0].photo}
             res.send(list);
           }else{
             const list = {retCode:2}
@@ -149,7 +149,9 @@ router.post('/local/login/insertDocOne',(req,res) => {
 // 写文章存到所有文章列表
 router.post('/local/login/saveDocuments',(req,res) => {
   let document = req.body.html
+  console.log( req.body.time)
   let DocumentList = new models.Document({
+    account: req.body.account,
     name : req.body.name,
     time : req.body.time,
     document:document
@@ -169,7 +171,20 @@ router.post('/local/login/queryDocuments',(req,res) => {
           res.send(err);
       } else {
           data.sort((a,b)=>a.time<b.time)
-          data.map(a=>a.time = moment(a.time).startOf('day').fromNow());
+          data.map(a=>a.time = moment(a.time).fromNow());
+          res.send(data)
+      }
+  });
+});
+//从首页查询单一文章
+router.post('/local/login/queryDetailDoc',(req,res) => {
+  let account = {
+    _id : req.body.id
+  }
+  models.Document.findOne(account,(err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
           res.send(data)
       }
   });
