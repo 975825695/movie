@@ -12,22 +12,23 @@
     <div class="content" v-html="docu.content">
     </div>
     <div class="comment">
-      <div class="com_list">
+      <div class="com_list" v-for="(list,index) in commentList" :key="index">
         <div class="com_user">
-          <img src="" alt="">
-          <p>雪山飞狐</p>
+          <img :src="list.photo" alt="">
+          <p>用户名：{{list.account}}</p>
+          <p>{{list.time}}</p>
         </div>
         <div class="com_content">
-          真的不错哦
+          {{list.comment}}
         </div>
       </div>
     </div>
     <div class="write_comment">
-      <textarea placeholder="快发表评论吧！">
+      <textarea placeholder="快发表评论吧！" v-model="comment">
 
       </textarea>
       <div class="write_sub">
-        <p>提交</p>
+        <p @click="subComment()">提交</p>
       </div>
     </div>
   </section>
@@ -43,11 +44,15 @@ export default {
       docu:{},
       photoUrl:'',
       account:'',
-      userInfo:''
+      userInfo:'',
+      comment:'',
+      commentList:[]
     }
   },
   created () {
     this.getData()
+     let photo = sessionStorage.getItem('photo')
+     console.log(photo)
   },
   methods: {
     getData:function(){
@@ -61,6 +66,7 @@ export default {
           this.tagList = response.data.document.tags
           this.docu = response.data.document
           this.account = response.data.account
+          this.commentList = response.data.comment
       }).then(()=>{
         let params = {
           account :this.account
@@ -68,8 +74,30 @@ export default {
         axios.post('/local/login/queryAccount',params)
         .then((response)=>{
           this.userInfo = response.data[0]
-           this.photoUrl = '../../../'+this.userInfo.photo
+          this.photoUrl = '../../../'+this.userInfo.photo
         })
+      })
+    },
+    subComment:function(){
+      if(!this.comment) return
+      const id = this.$route.params.id
+      let time = new Date()
+      let account = sessionStorage.getItem('account')
+      let name = sessionStorage.getItem('name')
+      let photo = sessionStorage.getItem('photo')
+      photo = '../../../'+photo
+      let params ={
+        id:id,
+        comment: this.comment,
+        time:time,
+        account:account,
+        name:name,
+        photoUrl:photo
+      }
+      axios.post('/local/login/saveComment',params)
+        .then((response)=>{
+          alert('评论成功')
+          window.location.reload()
       })
     }
   }
@@ -131,9 +159,10 @@ section{
       border-top: 1px solid #ccc;
       width: 100%;
       .com_list{
-         width: 100%;
-        margin-left: 25px;
-        margin-top: 25px;
+        width: 90%;
+        margin-left: 20px;
+        margin-top: 15px;
+        border-bottom: 1px solid #ccc;
         .com_user{
         width: 100%;
         display: flex;
@@ -144,21 +173,32 @@ section{
           background-color: #ccc;
           border-radius: 50%;
         }
-        p{
+        p:nth-of-type(1){
           margin-left: 50px;
           width: 200px;
           height: 50px;
           line-height: 50px;
+          font-weight: bold;
+        }
+        p:nth-of-type(2){
+          height: 50px;
+          line-height: 50px;
+          width: 150px;
+          font-size: 16px;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+          overflow: hidden;
         }
       }
       .com_content{
         font-size: 18px;
-        margin-top: 20px;
+        padding-left: 100px;
         margin-bottom: 20px;
       }
       }
     }
     .write_comment{
+      margin-top: 20px;
       border-radius: 10px;
       background-color: #eee;
       margin-bottom: 20px;
@@ -189,6 +229,8 @@ section{
           background-color: #007fff;
           border-radius: 2px;
           text-align: center;
+          color: #ffffff;
+          cursor: pointer;
         }
       }
     }

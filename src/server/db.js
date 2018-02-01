@@ -27,7 +27,8 @@ const Documentchema = mongoose.Schema({
   account: String,
   name : String,
   time : String,
-  document: Object
+  document: Object,
+  comment: Array
 });
 
 /************** 定义模型Model **************/

@@ -14,6 +14,7 @@ import community from '@/components/movie/community'
 import communityIndex from '@/components/movie/components-community/index'
 import communityWrite from '@/components/movie/components-community/write'
 import communityDetail from '@/components/movie/components-community/detail'
+import communityMyDocument from '@/components/movie/components-community/myDocument'
 
 import store from '@/store'
 Vue.use(Router)
@@ -70,7 +71,8 @@ export default new Router({
       children:[
         {path:'',component:communityIndex},
         {path:'write',component:communityWrite},
-        {path:'detail/:id',component:communityDetail}
+        {path:'detail/:id',component:communityDetail},
+        {path:'myDocument',component:communityMyDocument}
       ]
     }
   ]

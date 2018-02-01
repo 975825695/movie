@@ -11,7 +11,7 @@
       </div>
       <router-link :to="{path:'/community/write'}">写文章</router-link>
       <div class="userWel">
-        欢迎你 | {{username}}
+        <router-link :to="{path:'/community/myDocument',query:'1'}">欢迎你 | {{username}}</router-link>
       </div>
     </div>
   </header>
@@ -106,12 +106,21 @@ header{
         color: #007fff;
       }
       .userWel{
-        width: 200px;
-        font-size: 18px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #007fff;
+          width: 200px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        a{
+          display: inline-block;
+          text-align: center;
+          cursor: pointer;
+          width: 200px;
+          font-size: 18px;
+          color: #007fff;
+          &:hover{
+            color:red;
+          }
+        }
       }
     }
 }

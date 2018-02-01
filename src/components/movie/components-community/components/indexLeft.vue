@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div class="classify">
-      <p>热门 |</p>
+    <div class="classify" v-show="!myDocBool">
+      <!-- <p>热门 |</p> -->
       <p>最新 |</p>
       <p>评论</p>
     </div>
@@ -15,8 +15,7 @@
         {{list.document.title}}
       </div>
       <div class="icons">
-        <p>点赞数：1</p>
-        <p>评论数：2</p>
+        <p>评论数：{{list.comment.length}}</p>
       </div>
     </div>
   </section>
@@ -34,7 +33,8 @@ export default {
           keyword:'Node.js',
           title:'关于程序员的一点感想',
           zan:'3',
-          comment:'4'
+          comment:'4',
+          myDocBool:false
         }
         ],
       List:[]
@@ -45,11 +45,25 @@ export default {
   },
   methods: {
     getData:function(){
-      let params = {}
-       axios.post('/local/login/queryDocuments',params)
+      let query = this.$route.query[0]
+      if (!query) {
+        this.myDocBool = false
+        let params = {}
+        axios.post('/local/login/queryDocuments',params)
+        .then((response) => {
+        this.List = response.data
+        })
+      } else {
+        this.myDocBool = true
+        let account = sessionStorage.getItem('account')
+        let params = {
+          account:account
+        }
+        axios.post('/local/login/queryMyDocuments',params)
         .then((response) => {
           this.List = response.data
-       })
+        })
+      }
     },
     ToDetail:function(id){
       window.location.href = `#/community/detail/${id}`

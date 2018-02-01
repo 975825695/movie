@@ -53,27 +53,21 @@ export default {
       rePwd:'',
       message:'',
       photo:'',
-      photoUrl:''
+      photoUrl:'',
+      saveBase64:'',
+      userInfo:{}
     }
   },
   props:{
     isON:Number
   },
-  computed:{
-    ...mapState(['userInfo']),
+  created () {
+    this.init()
   },
-  beforeUpdate () {
-    this.photoUrl = '../../'+this.userInfo.photo
-  },
-  // updated () {
-  //   this.photoUrl = '../../'+this.userInfo.photo
-  //   console.log(2,this.userInfo.photo)
+  // beforeUpdate () {
+  //   // this.photoUrl = '../../'+this.userInfo.photo
+  //   this.photoUrl = this.saveBase64
   // },
-  mounted () {
-    // console.log(this.userInfo)
-    // console.log(3,this.userInfo.photo)
-    // this.photoUrl = '../../'+this.userInfo.photo
-  },
   watch:{
     isON(cur,old){
       // console.log(cur,old)
@@ -89,8 +83,18 @@ export default {
   },
   methods:{
     init:function(){
-      // this.userList = this.userInfo
-
+      let account = sessionStorage.getItem('account')
+        let params = {
+          account : account
+        }
+        axios.post('/local/login/queryAccount',params)
+        .then((response) => {
+        this.userInfo = response.data[0]
+        this.photoUrl = '../../'+response.data[0].photo
+        if (response.data[0].photo){
+           sessionStorage.setItem('photo',response.data[0].photo)
+        }
+      })
     },
     updateAccount:function(){
       let params = {
@@ -119,12 +123,14 @@ export default {
     // 这个地方转了base64要注意
     upLoadFile:function(e){
       const file = e.target.files || e.dataTransfer.files
+      console.log(file)
       if (!file.length) return
       const reader = new FileReader()
       reader.readAsDataURL(file[0])
       let _this = this
       reader.onload= function(e){
-        _this.photoUrl = this.result
+        _this.photoUrl = this.result,
+        _this.saveBase64 = this.result
       }
       this.photo = file[0]
     },
@@ -135,6 +141,7 @@ export default {
       axios.post('/local/login/upImg',form,{headers:{'Content-Type':'multipart/form-data'}})
         .then((response) => {
           alert('上传成功！')
+          window.location.reload()
       })
     }
   },
