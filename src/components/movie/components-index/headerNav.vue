@@ -3,7 +3,7 @@
     <div class="nav-ul">
       <ul>
         <router-link to="/">首页</router-link>
-        <router-link to="/community" @click.native="valiLogin()">影评社区</router-link>
+        <router-link to="/community/" @click.native="valiLogin()">影评社区</router-link>
       </ul>
     </div>
   </nav>

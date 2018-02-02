@@ -2,16 +2,16 @@
   <header>
     <div class="head">
       <div class="title">
-        <router-link :to="{path:'/community'}">影评社区</router-link>
+        <router-link :to="{path:'/community/'}">影评社区</router-link>
         <router-link :to="{path:'/'}">影院首页</router-link>
       </div>
       <div class="head_input">
-         <input type="text" placeholder="搜索文章">
-         <p>搜索</p>
+         <input type="text" placeholder="搜索文章" v-model="searchText">
+         <p @click="search()">搜索</p>
       </div>
       <router-link :to="{path:'/community/write'}">写文章</router-link>
       <div class="userWel">
-        <router-link :to="{path:'/community/myDocument',query:'1'}">欢迎你 | {{username}}</router-link>
+        <router-link :to="{path:'/community/myDocument',query:{name:'my'}}">欢迎你 | {{username}}</router-link>
       </div>
     </div>
   </header>
@@ -22,7 +22,8 @@
 export default {
   data () {
     return {
-      username:''
+      username:'',
+      searchText:''
     }
   },
   created () {
@@ -32,6 +33,17 @@ export default {
     getData:function(){
       let username = sessionStorage.getItem('name');
       this.username = username
+    },
+    search:function(){
+      this.$router.push({path:'searchDocument',query:{name:`${this.searchText}`}});
+      // let params = {
+      //   searchText: this.searchText
+      // }
+      // axios.post('/local/login/searchDocument',params)
+      //   .then((response)=>{
+      //     console.log(response.data)
+
+      // })
     }
   }
 }

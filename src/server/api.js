@@ -187,6 +187,16 @@ router.post('/local/login/queryMyDocuments',(req,res) => {
       }
   });
 });
+// 删除
+router.post('/local/login/delDocument',(req,res) => {
+  models.Document.remove({_id:req.body._id},(err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
+          res.send(data)
+      }
+  });
+});
 //从首页查询单一文章详细
 router.post('/local/login/queryDetailDoc',(req,res) => {
   let account = {
@@ -218,6 +228,19 @@ router.post('/local/login/saveComment',(req,res) => {
           res.send(err);
       } else {
           res.send(data);
+      }
+  });
+});
+// 首页搜索功能，根据标题关键字查询
+router.post('/local/login/searchDocument',(req,res) => {
+  var reg = req.body.searchText
+  models.Document.find({$where:`this.document.title.indexOf('${reg}') != -1`},(err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
+          data.sort((a,b)=>a.time<b.time)
+          data.map(a=>a.time = moment(a.time).fromNow());
+          res.send(data)
       }
   });
 });

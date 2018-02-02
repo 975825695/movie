@@ -72,7 +72,8 @@ export default new Router({
         {path:'',component:communityIndex},
         {path:'write',component:communityWrite},
         {path:'detail/:id',component:communityDetail},
-        {path:'myDocument',component:communityMyDocument}
+        {path:'myDocument',component:communityMyDocument},
+        {path:'searchDocument',component:communityMyDocument}
       ]
     }
   ]

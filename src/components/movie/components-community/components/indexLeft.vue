@@ -2,8 +2,13 @@
   <section>
     <div class="classify" v-show="!myDocBool">
       <!-- <p>热门 |</p> -->
-      <p>最新 |</p>
-      <p>评论</p>
+      <p :class="{active:isActive}" @click="newToCom('new')">最新 |</p>
+      <p :class="{active:!isActive}" @click="newToCom('com')">评论</p>
+    </div>
+    <div class="classify" v-show="myDocBool">
+      <p>我的 |</p>
+      <p>文章</p>
+      <p @click="manageShow()" v-show="myDocBool">管理</p>
     </div>
     <div class="contentList" v-for="(list,index) in List" :key="index" @click="ToDetail(list._id)">
       <div class="userInfo">
@@ -16,6 +21,9 @@
       </div>
       <div class="icons">
         <p>评论数：{{list.comment.length}}</p>
+      </div>
+      <div class="del" v-if="manage">
+        <p @click.stop="delDocument(list._id)">删除</p>
       </div>
     </div>
   </section>
@@ -37,7 +45,9 @@ export default {
           myDocBool:false
         }
         ],
-      List:[]
+      List:[],
+      isActive:true,
+      manage:false
     }
   },
   created () {
@@ -45,7 +55,8 @@ export default {
   },
   methods: {
     getData:function(){
-      let query = this.$route.query[0]
+      let query = this.$route.query.name
+      console.log(query)
       if (!query) {
         this.myDocBool = false
         let params = {}
@@ -53,7 +64,8 @@ export default {
         .then((response) => {
         this.List = response.data
         })
-      } else {
+       } else if (query === 'my') {
+
         this.myDocBool = true
         let account = sessionStorage.getItem('account')
         let params = {
@@ -63,11 +75,48 @@ export default {
         .then((response) => {
           this.List = response.data
         })
+      } else {
+        this.myDocBool = false
+        let params = {
+          searchText: query
+        }
+        axios.post('/local/login/searchDocument',params)
+          .then((response)=>{
+          this.List = response.data
+        })
       }
     },
     ToDetail:function(id){
       window.location.href = `#/community/detail/${id}`
+    },
+    newToCom:function(func){
+      let name =func
+      if (name === 'new') {
+        this.isActive = true
+        this.List.sort((a,b)=>a.time<b.time)
+      } else if (name === 'com') {
+        this.isActive = false
+        this.List.sort((a,b)=>a.comment.length<b.comment.length)
+      }
+    },
+    delDocument:function(id){
+      let params = {
+        _id : id
+      }
+      axios.post('/local/login/delDocument',params)
+          .then((response)=>{
+            if (response.data.n === 1) {
+              alert('删除成功')
+              window.location.reload()
+            }
+      })
+    },
+    manageShow:function(){
+      this.manage = !this.manage
     }
+  },
+  watch:{
+    '$route':'getData'
   }
 }
 </script>
@@ -80,7 +129,11 @@ section{
       height: 40px;
       display: flex;
       border-bottom: 2px solid #eee;
+      .active{
+        color: red;
+      }
       p{
+        cursor: pointer;
         font-size: 16px;
         color: #aaa;
         height: 40px;
@@ -90,8 +143,15 @@ section{
       p:nth-of-type(1){
         margin-left: 20px;
       }
+      p:nth-of-type(3){
+        margin-left: 490px;
+        &:hover{
+          color: red;
+        }
+      }
     }
     .contentList{
+      position: relative;
       &:hover{
         background-color: rgba($color: #eee, $alpha: 0.2);
         cursor: pointer;
@@ -110,6 +170,7 @@ section{
           text-overflow:ellipsis;
           overflow: hidden;
         }
+
         p:nth-of-type(1){
           margin-left: 20px;
         }
@@ -134,6 +195,29 @@ section{
           color:#ccc;
         }
         margin-bottom: 20px;
+      }
+      .del{
+        font-size: 20px;
+        position: absolute;
+        width: 100px;
+        height: 100%;
+        background-color: rgba($color: #eee, $alpha: 0.4);
+        top: 0;
+        right: 1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        p{
+          z-index: 999;
+          width: 80px;
+          height: 50px;
+          line-height: 50px;
+          border-radius: 50%;
+          text-align: center;
+          &:hover{
+            background-color: #ccc;
+          }
+        }
       }
     }
 }

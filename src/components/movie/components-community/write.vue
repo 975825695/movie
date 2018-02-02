@@ -102,6 +102,7 @@ export default {
           axios.post('/local/login/insertDocOne',params)
           .then((response) => {
             if(response.data.n!==0){
+              alert('发表成功!')
               window.location.href = '#/community'
             }
         })
