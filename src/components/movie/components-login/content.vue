@@ -54,6 +54,8 @@ export default {
       axios.post('/local/login/getAccount',params)
         .then((response) => {
           if (response.data.retCode === 1) {
+            const user = JSON.stringify(response.data)
+            sessionStorage.setItem("user",user)
             sessionStorage.setItem("name", response.data.name);
             sessionStorage.setItem("vip", response.data.vip);
             sessionStorage.setItem("account", response.data.account);

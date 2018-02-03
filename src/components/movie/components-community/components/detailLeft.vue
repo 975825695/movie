@@ -35,7 +35,7 @@
 </template>
 
 <script>
-
+import { mapActions } from "vuex";
 export default {
   data () {
     return {
@@ -52,9 +52,9 @@ export default {
   created () {
     this.getData()
      let photo = sessionStorage.getItem('photo')
-     console.log(photo)
   },
   methods: {
+    ...mapActions(['saveUserLike']),
     getData:function(){
       const id = this.$route.params.id
       let params = {
@@ -67,6 +67,7 @@ export default {
           this.docu = response.data.document
           this.account = response.data.account
           this.commentList = response.data.comment
+          this.saveUserLike(response.data.document.tags)
       }).then(()=>{
         let params = {
           account :this.account

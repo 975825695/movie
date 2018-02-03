@@ -2,11 +2,11 @@
   <section>
     <div class="recommend">
       <div class="title">
-        为您推荐
+        您可能感兴趣
       </div>
       <div class="recomList">
-        <p>喜剧</p>
-        <p>战争</p>
+        <p>雪山飞狐为什么这么丑</p>
+        <p>浪里个浪为什么这么好看</p>
       </div>
     </div>
   </section>
@@ -17,12 +17,18 @@
 export default {
   data () {
     return {
+      user:{}
     }
   },
   created () {
+    this.getData()
   },
   methods: {
-
+    getData:function(){
+      const user = sessionStorage.getItem("user")
+      this.user = JSON.parse(user)
+      console.log(this.user)
+    }
   }
 }
 </script>
@@ -37,7 +43,7 @@ section{
         height: 40px;
         line-height: 40px;
         text-align: center;
-        font-size: 24px;
+        font-size: 20px;
       }
       .recomList{
         width: 100%;
@@ -45,16 +51,19 @@ section{
         flex-direction: column;
         align-items: center;
         p{
-          width: 80px;
+          width: 150px;
           border-radius: 2px;
           cursor: pointer;
-          height: 25px;
+          height: 30px;
           font-size: 16px;
-          line-height: 25px;
-          color: #fff;
+          line-height: 30px;
+          color: #000;
           text-align: center;
-          background-color: red;
           margin-top: 10px;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+          overflow: hidden;
+          border: 1px solid #eee;
         }
       }
     }

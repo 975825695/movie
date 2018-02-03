@@ -10,5 +10,14 @@ export default {
   },
   [types.GET_USERINFO] (state, data) {
     state.userInfo = data
+  },
+  [types.SAVE_USERLIKE] (state, data) {
+    if (data === '爱情') {
+      state.userLike.love += 1
+    } else if (data === '喜剧') {
+      state.userLike.comic += 1
+    } else if (data === '战争') {
+      state.userLike.fight += 1
+    }
   }
 }

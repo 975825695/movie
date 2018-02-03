@@ -89,6 +89,8 @@ export default {
         }
         axios.post('/local/login/queryAccount',params)
         .then((response) => {
+        const user = JSON.stringify(response.data[0])
+        sessionStorage.setItem("user",user)
         this.userInfo = response.data[0]
         this.photoUrl = '../../'+response.data[0].photo
         if (response.data[0].photo){
