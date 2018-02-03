@@ -1,11 +1,11 @@
 <template>
   <nav class="video-desc">
     <p>
-        <span>{{detailList.title}}</span>
-        <span>{{detailList.year}}</span>
-        <span>{{detailList.rating.average}}</span>
+        <span>{{list.title}}</span>
+        <span>{{list.year}}</span>
+        <span>{{average}}</span>
       </p>
-    <p>{{detailList.summary}}</p>
+    <p>{{list.summary}}</p>
   </nav>
 </template>
 
@@ -14,11 +14,18 @@ import { mapState } from 'vuex'
 export default {
   data () {
     return {
-
+      list:[],
+      average:''
     }
   },
   computed: {
     ...mapState(['detailList'])
+  },
+  watch:{
+    detailList:function (cur,old) {
+      this.list = cur
+      this.average = cur.rating.average
+    }
   },
   components:{
   }

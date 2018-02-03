@@ -71,13 +71,16 @@ export default {
       }else{
         let tag = []
         if(this.comic){
-          tag.push('喜剧')
+          tag = '喜剧'
+          // tag.push('喜剧')
         }
         if(this.love){
-          tag.push('爱情')
+          tag = '爱情'
+          // tag.push('爱情')
         }
         if(this.fight){
-          tag.push('战争')
+          tag = '战争'
+          // tag.push('战争')
         }
         let name = sessionStorage.getItem('name')
         let account = sessionStorage.getItem('account')

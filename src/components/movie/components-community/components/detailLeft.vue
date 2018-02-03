@@ -4,7 +4,7 @@
       <img :src="photoUrl" alt="">
       <p>{{dataList.name}}</p>
       <p>{{dataList.time}}</p>
-      <p><span v-for="(list,index) in tagList" :key="index">{{list}}</span></p>
+      <p><span >{{tagList}}</span></p>
     </div>
     <p class="title">
       {{docu.title}}
@@ -40,7 +40,7 @@ export default {
   data () {
     return {
       dataList:[],
-      tagList:[],
+      tagList:'',
       docu:{},
       photoUrl:'',
       account:'',

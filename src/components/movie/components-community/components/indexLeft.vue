@@ -2,19 +2,35 @@
   <section>
     <div class="classify" v-show="!myDocBool">
       <!-- <p>热门 |</p> -->
-      <p :class="{active:isActive}" @click="newToCom('new')">最新 |</p>
-      <p :class="{active:!isActive}" @click="newToCom('com')">评论</p>
+      <div class="common">
+        <p :class="{active:isActive}" @click="newToCom('new')">最新 |</p>
+        <p :class="{active:!isActive}" @click="newToCom('com')">评论</p>
+      </div>
+      <div class="classes">
+        <span>按类型:</span>
+        <select v-model="selValue">
+        <option :value="list.text" v-for="(list,index) in selList" :key="index">{{list.text}}</option>
+        </select>
+      </div>
     </div>
     <div class="classify" v-show="myDocBool">
-      <p>我的 |</p>
-      <p>文章</p>
-      <p @click="manageShow()" v-show="myDocBool">管理</p>
+      <div class="common">
+        <p>我的 |</p>
+        <p>文章</p>
+      </div>
+      <div class="classes">
+        <span>按类型:</span>
+        <select v-model="selValue">
+        <option :value="list.text" v-for="(list,index) in selList" :key="index">{{list.text}}</option>
+        </select>
+        <p class="manage" @click="manageShow()" v-show="myDocBool">管理</p>
+      </div>
     </div>
     <div class="contentList" v-for="(list,index) in List" :key="index" @click="ToDetail(list._id)">
       <div class="userInfo">
         <p>{{list.name}}</p>
         <p>{{list.time}}</p>
-        <p><span v-for="(item,index) in list.document.tags" :key="index">{{item}}</span></p>
+        <p><span>{{list.document.tags}}</span></p>
       </div>
       <div class="title">
         {{list.document.title}}
@@ -47,7 +63,10 @@ export default {
         ],
       List:[],
       isActive:true,
-      manage:false
+      manage:false,
+      selValue:'全部', // select的值
+      selList:[{text:'全部'},{text:'喜剧'},{text:'战争'},{text:'爱情'}],
+      tempList:[] // 临时存储，为了实现按类型分类
     }
   },
   created () {
@@ -56,12 +75,13 @@ export default {
   methods: {
     getData:function(){
       let query = this.$route.query.name
-      console.log(query)
+      // console.log(query)
       if (!query) {
         this.myDocBool = false
         let params = {}
         axios.post('/local/login/queryDocuments',params)
         .then((response) => {
+        this.tempList = response.data
         this.List = response.data
         })
        } else if (query === 'my') {
@@ -73,6 +93,7 @@ export default {
         }
         axios.post('/local/login/queryMyDocuments',params)
         .then((response) => {
+          this.tempList = response.data
           this.List = response.data
         })
       } else {
@@ -82,6 +103,7 @@ export default {
         }
         axios.post('/local/login/searchDocument',params)
           .then((response)=>{
+          this.tempList = response.data
           this.List = response.data
         })
       }
@@ -116,7 +138,21 @@ export default {
     }
   },
   watch:{
-    '$route':'getData'
+    '$route':'getData',
+    // list:function(cur,old){
+    //   this.list = cur
+    // },
+    selValue:function(cur,old){
+      if (cur === '喜剧') {
+        this.List = this.tempList.filter(i=>i.document.tags==='喜剧')
+      } else if (cur === '战争') {
+        this.List = this.tempList.filter(i=>i.document.tags==='战争')
+      } else if (cur === '爱情') {
+        this.List = this.tempList.filter(i=>i.document.tags==='爱情')
+      } else if(cur === '全部'){
+        this.List = this.tempList
+      }
+    }
   }
 }
 </script>
@@ -128,25 +164,52 @@ section{
       width: 100%;
       height: 40px;
       display: flex;
+      justify-content: space-between;
       border-bottom: 2px solid #eee;
-      .active{
-        color: red;
-      }
-      p{
-        cursor: pointer;
-        font-size: 16px;
-        color: #aaa;
-        height: 40px;
-        line-height: 40px;
-        width: 50px;
-      }
-      p:nth-of-type(1){
-        margin-left: 20px;
-      }
-      p:nth-of-type(3){
-        margin-left: 490px;
-        &:hover{
+      .common{
+        display: flex;
+        width: 200px;
+        .active{
           color: red;
+        }
+        p{
+          cursor: pointer;
+          font-size: 16px;
+          color: #aaa;
+          height: 40px;
+          line-height: 40px;
+          width: 50px;
+        }
+        p:nth-of-type(1){
+          margin-left: 20px;
+        }
+      }
+      .classes{
+        width: 200px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .manage{
+          padding-left: 20px;
+          cursor: pointer;
+          width: 50px;
+          &:hover{
+            color: red;
+          }
+        }
+        span{
+          display: inline-block;
+          width: 70px;
+        }
+        select{
+          width: 60px;
+          height: 30px;
+          text-align: center;
+          font-size: 16px;
+          option{
+            font-size: 16px;
+            text-align: center;
+          }
         }
       }
     }
