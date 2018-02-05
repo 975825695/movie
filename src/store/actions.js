@@ -14,6 +14,10 @@ export const saveUserLike = async ({ commit }, data) => {
   console.log(data)
   commit(types.SAVE_USERLIKE, data)
 }
+// 兴趣推荐刷新之后清空
+export const delUserLike = async ({ commit }, data) => {
+  commit(types.DEL_USERLIKE, {})
+}
 // export const saveRecordId = async ({ commit }, data) => {
 //   console.log(data)
 //   // let list = {'id':data}

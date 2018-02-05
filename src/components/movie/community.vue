@@ -9,14 +9,34 @@
 <script>
 import headerTop from './components-community/header.vue'
 import footerCom from './components-index/footerCom.vue'
+import { mapState,mapActions } from "vuex";
 export default {
   data () {
     return {
     }
   },
+  computed:{
+    ...mapState(['userLike'])
+  },
   created () {
+    this.watchF5()
   },
   methods: {
+    ...mapActions(['delUserLike']),
+    watchF5:function(){
+       window.onbeforeunload = ()=>{
+       let params ={
+         account:sessionStorage.getItem('account'),
+         love:this.userLike.love,
+         fight:this.userLike.fight,
+         comic:this.userLike.comic
+       }
+       axios.post('/local/login/saveUserLikes',params)
+        .then((response)=>{
+          this.delUserLike()
+       })
+     }
+    }
   },
   components:{
     headerTop,

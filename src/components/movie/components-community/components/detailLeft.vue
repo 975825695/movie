@@ -101,6 +101,9 @@ export default {
           window.location.reload()
       })
     }
+  },
+  watch:{
+    '$route':'getData'
   }
 }
 </script>

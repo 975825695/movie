@@ -15,7 +15,6 @@ export default {
   methods:{
     valiLogin:function(){
       let account = sessionStorage.getItem('account')
-      console.log(account)
       if(!account) {
         alert('请先登录')
         window.location.href = '#/login'

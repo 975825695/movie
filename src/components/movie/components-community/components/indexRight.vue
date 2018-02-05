@@ -5,8 +5,7 @@
         您可能感兴趣
       </div>
       <div class="recomList">
-        <p>雪山飞狐为什么这么丑</p>
-        <p>浪里个浪为什么这么好看</p>
+        <p @click="ToDetail(item._id)" v-for="(item,index) in list" :key="index">{{item.document.title}}</p>
       </div>
     </div>
   </section>
@@ -17,7 +16,7 @@
 export default {
   data () {
     return {
-      user:{}
+      list:{}
     }
   },
   created () {
@@ -25,9 +24,29 @@ export default {
   },
   methods: {
     getData:function(){
-      const user = sessionStorage.getItem("user")
-      this.user = JSON.parse(user)
-      console.log(this.user)
+      let user = sessionStorage.getItem("user")
+      user = JSON.parse(user)
+      let userLike = user.userLike
+      let list = Object.keys(userLike).sort((a,b)=>userLike[b]-userLike[a])
+      // let list2 = Object.values(userLike).sort((a,b)=>a-b)
+      let like = ''
+      if(list[0] === 'love') {
+        like = '爱情'
+      }else if (list[0] === 'fight') {
+        like = '战争'
+      }else if (list[0] === 'comic'){
+        like = '喜剧'
+      }
+      let params = {
+        userLike:like
+      }
+      axios.post('/local/login/queryUserLike',params)
+        .then((response)=>{
+          this.list = response.data
+      })
+    },
+    ToDetail:function(id){
+       window.location.href = `#/community/detail/${id}`
     }
   }
 }

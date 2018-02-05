@@ -53,13 +53,14 @@ export default {
       }
       axios.post('/local/login/getAccount',params)
         .then((response) => {
+          console.log(response.data)
           if (response.data.retCode === 1) {
-            const user = JSON.stringify(response.data)
+            const user = JSON.stringify(response.data.list)
             sessionStorage.setItem("user",user)
-            sessionStorage.setItem("name", response.data.name);
-            sessionStorage.setItem("vip", response.data.vip);
-            sessionStorage.setItem("account", response.data.account);
-            sessionStorage.setItem("photo", response.data.photo);
+            sessionStorage.setItem("name", response.data.list.name);
+            sessionStorage.setItem("vip", response.data.list.vip);
+            sessionStorage.setItem("account", response.data.list.account);
+            sessionStorage.setItem("photo", response.data.list.photo);
             window.location.href = '/'
           } else if (response.data.retCode === 2) {
             alert('密码错误')

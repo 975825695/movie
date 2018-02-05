@@ -17,7 +17,8 @@ router.post('/local/login/createAccount',(req,res) => {
         password : req.body.password,
         vip:0,
         name:'新用户',
-        document:[]
+        document:[],
+        userLike:{love:0,fight:0,comic:0}
     });
     // 保存数据newAccount数据进mongoDB
     newAccount.save((err,data) => {
@@ -40,7 +41,7 @@ router.post('/local/login/getAccount',(req,res) => {
             res.send(err);
         } else {
           if(data[0].password===req.body.password){
-            const list = {retCode:1,vip:data[0].vip,name:data[0].name,account:data[0].account,photo:data[0].photo}
+            const list = {retCode:1,list:data[0]}
             res.send(list);
           }else{
             const list = {retCode:2}
@@ -242,6 +243,35 @@ router.post('/local/login/searchDocument',(req,res) => {
           data.map(a=>a.time = moment(a.time).fromNow());
           res.send(data)
       }
+  });
+});
+// 兴趣推荐存储
+router.post('/local/login/saveUserLikes',(req,res) => {
+
+  models.Login.findOne({account:req.body.account},(err,data) => {
+    let userLike = {
+      love:req.body.love+data.userLike.love,
+      fight:req.body.fight+data.userLike.fight,
+      comic:req.body.comic+data.userLike.comic
+    }
+    models.Login.update({account:req.body.account},{$set:{userLike}},(err,data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    });
+  });
+});
+// 根据兴趣推荐查询相关文章
+router.post('/local/login/queryUserLike',(req,res) => {
+  let userLike = req.body.userLike
+  models.Document.find({$where:`this.document.tags.indexOf('${userLike}') != -1`},(err,data) => {
+    if (err) {
+        res.send(err);
+    } else {
+        res.send(data)
+    }
   });
 });
 
