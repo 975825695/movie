@@ -1,6 +1,6 @@
 <template>
   <header>
-    <p>在线影院</p>
+    <p @click="goToHome()">在线影院</p>
     <!-- <p>登录</p> -->
   </header>
 </template>
@@ -17,6 +17,9 @@ export default {
   created () {
   },
   methods:{
+    goToHome:function(){
+      window.location.href = "/"
+    }
   },
   components:{
   }
@@ -35,6 +38,7 @@ export default {
       height: 30px;
       line-height: 30px;
       color: #000;
+      cursor: pointer;
     }
     p:nth-of-type(1){
       width: 200px;
