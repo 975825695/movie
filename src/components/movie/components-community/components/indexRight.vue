@@ -59,7 +59,18 @@ export default {
       // 创建地图实例
       var point = new BMap.Point(116.404, 39.915);
       // 创建点坐标
-      map.centerAndZoom(point, 15);
+      map.centerAndZoom(point, 10);
+      var geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+          var mk = new BMap.Marker(r.point);
+          map.addOverlay(mk);
+          map.panTo(r.point);
+        }
+        else {
+          alert('failed'+this.getStatus());
+        }
+      },{enableHighAccuracy: true})
     }
   }
 };

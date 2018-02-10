@@ -26,9 +26,9 @@ export default {
     buyVip:function () {
       const cf = confirm("确认购买吗")
       if (cf) {
-        const name = sessionStorage.getItem("name");
+        const account = sessionStorage.getItem("account");
         let params = {
-            account : name,
+            account : account,
             vip : 1
         }
         axios.post('/local/login/updateAccount',params)

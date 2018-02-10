@@ -15,7 +15,6 @@ const loginSchema = mongoose.Schema({
     vip: Number,
     name: String,
     photo: String,
-    document: Array,
     userLike: Object
 });
 const Coming_soonSchema = mongoose.Schema({

@@ -34,20 +34,30 @@ export default {
       this.activeBool = bool;
     },
     register:function(){
-      let params = {
+      if (!this.account||!this.password) {
+        alert('用户名或密码不能为空')
+      } else {
+        let params = {
         account : this.account,
         password : this.password
       }
       axios.post('/local/login/createAccount',params)
         .then((response) => {
+          console.log(response)
           if (response.data.retCode === 1) {
             alert('请再次登录，谢谢')
             this.activeBool = true
+          } else if (response.data.retCode === 2) {
+            alert('此用户已存在,请重新输入谢谢')
           }
       })
+      }
     },
     login:function(){
-      let params = {
+       if (!this.account||!this.password) {
+        alert('用户名或密码不能为空')
+      } else {
+        let params = {
         account : this.account,
         password : this.password
       }
@@ -66,6 +76,7 @@ export default {
             alert('密码错误')
           }
       })
+      }
     }
   },
   components:{

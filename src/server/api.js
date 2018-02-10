@@ -21,14 +21,27 @@ router.post('/local/login/createAccount',(req,res) => {
         userLike:{love:0,fight:0,comic:0}
     });
     // 保存数据newAccount数据进mongoDB
-    newAccount.save((err,data) => {
+    models.Login.find({account:req.body.account},(err,data) => {
         if (err) {
             res.send(err);
         } else {
-          const list = {retCode:1}
-            res.send(list);
+          let temp = data.length
+          if (temp !== 0) {
+            const list = {retCode:2}
+            res.send(list)
+          } else {
+            newAccount.save((err,data) => {
+              if (err) {
+                  res.send(err);
+              } else {
+                const list = {retCode:1}
+                  res.send(list);
+              }
+           });
+          }
         }
     });
+
 });
 // 登录
 router.post('/local/login/getAccount',(req,res) => {
@@ -115,11 +128,11 @@ router.post('/local/login/getVIP',(req,res) => {
   let newAccount = {
     account : req.body.account
   };
-  models.Login.find(newAccount,(err,data) => {
+  models.Login.findOne(newAccount,(err,data) => {
       if (err) {
           res.send(err);
       } else {
-          res.send(data[0])
+          res.send(data)
       }
   });
 });

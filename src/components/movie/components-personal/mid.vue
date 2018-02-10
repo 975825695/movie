@@ -19,9 +19,9 @@
       <div class="update">
         <p>修改密码</p>
         <input type="text" placeholder="新用户名1-6位" v-model="name" maxlength="6" >
-        <input type="text" placeholder="原密码" v-model="oldPwd" maxlength="6">
-        <input type="text" placeholder="新密码1-6位" v-model="newPwd" maxlength="6">
-        <input type="text" placeholder="再次输入" v-model="rePwd" maxlength="6" @blur="ccap()">
+        <input type="password" placeholder="原密码" v-model="oldPwd" maxlength="6">
+        <input type="password" placeholder="新密码1-6位" v-model="newPwd" maxlength="6">
+        <input type="password" placeholder="再次输入" v-model="rePwd" maxlength="6" @blur="ccap()">
         <span>{{message}}</span>
       </div>
       <div class="confirm">

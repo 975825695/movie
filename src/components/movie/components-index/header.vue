@@ -49,12 +49,12 @@ export default {
        sessionStorage.removeItem('account');
        window.location.href='/'
     },
-    toVip:async function(){
+    toVip:function(){
       const loginvalid =  this.loginValid()
       if (loginvalid) {
-        const name = sessionStorage.getItem("name");
+        const account = sessionStorage.getItem("account");
         let params = {
-          account : name
+          account : account
         }
         axios.post('/local/login/getVip',params)
           .then((response) => {
