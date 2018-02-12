@@ -49,16 +49,21 @@ router.post('/local/login/getAccount',(req,res) => {
     let newAccount = {
       account : req.body.account
     };
-    models.Login.find(newAccount,(err,data) => {
+    models.Login.findOne(newAccount,(err,data) => {
         if (err) {
             res.send(err);
         } else {
-          if(data[0].password===req.body.password){
-            const list = {retCode:1,list:data[0]}
-            res.send(list);
-          }else{
-            const list = {retCode:2}
-            res.send(list);
+          if(!data){
+            const list = {retCode:3}
+            res.send(list)
+          } else {
+            if(data.password===req.body.password){
+              const list = {retCode:1,list:data}
+              res.send(list);
+            }else{
+              const list = {retCode:2}
+              res.send(list)
+            }
           }
         }
     });

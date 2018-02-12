@@ -74,6 +74,8 @@ export default {
             window.location.href = '/'
           } else if (response.data.retCode === 2) {
             alert('密码错误')
+          } else if (response.data.retCode === 3) {
+            alert('用户名不存在')
           }
       })
       }
@@ -189,6 +191,9 @@ export default {
           margin-top: 50px;
           height: 50px;
           text-align: center;
+          // bottom: 1px solid #ccc;
+          border:1px solid #000;
+          font-size: 22px;
         }
         input:nth-of-type(3){
           background-color: #418fe4;

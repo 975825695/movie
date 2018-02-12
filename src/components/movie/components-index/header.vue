@@ -13,7 +13,7 @@
       <router-link :to="{path:'record'}">播放记录</router-link>
       <router-link to='/login' v-show="!loginBool">登录/注册</router-link>
       <div v-show="loginBool" class="users">
-         <p v-show="loginBool" class="hover">欢迎：{{name}}</p>
+         <p v-show="loginBool" class="hover">{{name}}</p>
          <div class="user-func">
            <router-link :to="{path:'personal'}">个人中心</router-link>
            <p @click="logout">注销</p>
@@ -141,6 +141,7 @@ export default {
         line-height: 80px;
         font-size: 15px;
         padding-right: 10px;
+        text-align: center;
       }
       a{
         height: 80px;
