@@ -83,7 +83,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .header{
+// @media screen and (min-width:750px){
+
+// }
+// @media screen and (max-width:750px){
+
+// }
+@media screen and (min-width:750px){
+   .header{
     width:1040px;
     display: flex;
     justify-content: space-between;
@@ -169,4 +176,80 @@ export default {
       }
     }
   }
+}
+@media screen and (max-width:750px){
+   .header{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    .header-logo{
+     display: none;
+    }
+    .header-input{
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      input{
+        height: 36px;
+        width: 180px;
+        border: 2px solid #ccc;
+      }
+      a{
+        background-color: #d00060;
+        font-size: 15px;
+        line-height: 36px;
+        color: #fff;
+        height: 36px;
+        width: 36px;
+        text-align: center;
+        border: 2px solid #d00060;
+      }
+    }
+    .header-nav{
+      display: flex;
+      padding-left: 20px;
+      p{
+        height: 80px;
+        cursor: pointer;
+        line-height: 80px;
+        font-size: 15px;
+        padding-right: 10px;
+      }
+      a{
+        height: 80px;
+        line-height: 80px;
+        font-size: 15px;
+        padding-right: 10px;
+        color: #000;
+      }
+      .users{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        &:hover .user-func{
+          display: block;
+        }
+        .user-func{
+          display: none;
+          position: absolute;
+          top: 50px;
+          p,a{
+          display: inline-block;
+          height: 40px;
+          background-color: #eee;
+          border-bottom: 1px solid #fff;
+          cursor: pointer;
+          color: #000;
+          line-height: 40px;
+          font-size: 15px;
+          text-align: center;
+          padding-right: 10px;padding-right: none;
+        }
+        }
+      }
+    }
+  }
+}
+
 </style>

@@ -3,7 +3,7 @@
     <header-nav></header-nav>
     <detail-video></detail-video>
     <video-desc></video-desc>
-    <people-list></people-list>
+    <people-list :peopleList="list"></people-list>
     <comment></comment>
     <footer-com></footer-com>
   </div>
@@ -19,6 +19,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
+      list : {}
     }
   },
   created () {
@@ -30,6 +31,7 @@ export default {
       let id = this.$route.params.id
       axios.get(`/v2/movie/subject/${id}`)
         .then((response) => {
+          this.list = response.data
           this.getDetailList(response.data)
       })
     }

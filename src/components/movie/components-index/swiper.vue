@@ -41,13 +41,15 @@ export default {
 
 <style lang="scss" scoped>
 @import url('../../../../bower_components/swiper/dist/css/swiper.min.css');
-   .swiper-container {
+@media screen and (min-width: 750px) {
+    .swiper-container {
       width: 1024px;
       height: 400px;
       border: 2px solid #000;
       margin-top: 20px;
     }
     .swiper-slide {
+      width: 100%;
       text-align: center;
       font-size: 18px;
       background: #fff;
@@ -69,4 +71,36 @@ export default {
         height: 100%;
       }
     }
+}
+@media screen and (max-width: 750px) {
+    .swiper-container {
+      width: 100%;
+      height: 200px;
+      border: 2px solid #000;
+      margin-top: 20px;
+    }
+    .swiper-slide {
+      width: 100%;
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      /* Center slide text vertically */
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      align-items: center;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+}
 </style>

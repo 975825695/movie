@@ -85,60 +85,118 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-section{
-  width: 1200px;
-  height: 600px;
-  background-color: #eee;
-  background-image: url('http://image13.m1905.cn/uploadfile/2017/1221/thumb_1_1000_322_20171221101456705154.jpg');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  position: relative;
-  .form{
-    top: 100px;
-    right: 100px;
-    width: 400px;
-    height: 400px;
-    position: absolute;
-    background-color: #fff;
-    border: 2px solid #000;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .title{
-      margin-top: 20px;
-      width:300px;
+@media screen and (min-width:750px){
+  section{
+    width: 1200px;
+    height: 600px;
+    background-color: #eee;
+    background-image: url('http://image13.m1905.cn/uploadfile/2017/1221/thumb_1_1000_322_20171221101456705154.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+    .form{
+      top: 100px;
+      right: 100px;
+      width: 400px;
+      height: 400px;
+      position: absolute;
+      background-color: #fff;
+      border: 2px solid #000;
+      border-radius: 5px;
       display: flex;
-      height: 50px;
-      border-bottom: 1px solid #000;
-      p{
-        font-size: 25px;
+      flex-direction: column;
+      align-items: center;
+      .title{
+        margin-top: 20px;
+        width:300px;
+        display: flex;
         height: 50px;
-        line-height: 50px;
-        cursor: pointer;
-      }
-      p:nth-of-type(1){
-        text-align: left;
-      }
-      p:nth-of-type(2){
-        text-align: right;
-      }
+        border-bottom: 1px solid #000;
+        p{
+          font-size: 25px;
+          height: 50px;
+          line-height: 50px;
+          cursor: pointer;
+        }
+        p:nth-of-type(1){
+          text-align: left;
+        }
+        p:nth-of-type(2){
+          text-align: right;
+        }
 
-    }
-    .input{
-      width: 300px;
-      input{
-        width: 300px;
-        margin-top: 50px;
-        height: 40px;
-        text-align: center;
       }
-      input:nth-of-type(3){
-        background-color: #418fe4;
+      .input{
+        width: 300px;
+        input{
+          width: 300px;
+          margin-top: 50px;
+          height: 40px;
+          text-align: center;
+        }
+        input:nth-of-type(3){
+          background-color: #418fe4;
+          height: 50px;
+          border-radius: 10px;
+          border: none;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width:750px){
+  section{
+    width: 100%;
+    height: 600px;
+    background-color: #eee;
+    position: relative;
+    .form{
+      top: 50px;
+      width: calc(100% - 3px);
+      height: 420px;
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #000;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .title{
+        margin-top: 20px;
+        width:300px;
+        display: flex;
         height: 50px;
-        border-radius: 10px;
-        border: none;
-        font-size: 20px;
+        border-bottom: 1px solid #000;
+        p{
+          font-size: 25px;
+          height: 50px;
+          line-height: 50px;
+          cursor: pointer;
+        }
+        p:nth-of-type(1){
+          text-align: left;
+        }
+        p:nth-of-type(2){
+          text-align: right;
+        }
+
+      }
+      .input{
+        width: 300px;
+        input{
+          width: 300px;
+          margin-top: 50px;
+          height: 50px;
+          text-align: center;
+        }
+        input:nth-of-type(3){
+          background-color: #418fe4;
+          height: 50px;
+          border-radius: 10px;
+          border: none;
+          font-size: 20px;
+        }
       }
     }
   }

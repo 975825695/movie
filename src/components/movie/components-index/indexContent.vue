@@ -88,6 +88,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@media screen and (min-width:750px){
   .index-content{
     width: 1024px;
     .title{
@@ -158,5 +159,75 @@ export default {
       }
     }
   }
-
+}
+@media screen and (max-width:750px){
+.index-content{
+    width: 100%;
+    .title{
+      font-size: 22px;
+      color: #609fbf;
+      margin-left: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      .active{
+        color: red;
+        text-decoration: underline;
+      }
+      span{
+        cursor: pointer;
+        // margin-left: 20px;
+        &:nth-of-type(1){
+          margin-left: 10px;
+        }
+        color:#000;
+        margin-left: 15px;
+        font-size: 20px;
+      }
+    }
+    .content-list{
+      display: flex;
+      justify-content: center;
+      .list{
+        width: 200px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        img{
+          display: inline-block;
+          width: 70px;
+          height: 100px;
+          background-image: url('../img/4042.jpg');
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+        }
+        p:nth-of-type(1){
+          width: 70px;
+          display: flex;
+          justify-content: space-between;
+          font-size: 18px;
+          color: #000;
+          span:nth-of-type(1){
+             text-align: left;
+             text-overflow: ellipsis;
+             overflow: hidden;
+             white-space: nowrap;
+          }
+          span:nth-of-type(2){
+             display: none;
+          }
+        }
+        p:nth-of-type(2){
+          width: 70px;
+          font-size: 16px;
+          color: #bbb;
+          text-align: center;
+          text-overflow: ellipsis;
+             overflow: hidden;
+             white-space: nowrap;
+        }
+      }
+    }
+  }
+}
 </style>

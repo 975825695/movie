@@ -1,7 +1,7 @@
 <template>
   <div class="video">
     <div class="content">
-      <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" width="640" height="264"
+      <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto"
       poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
         <source src="http://vjs.zencdn.net/v/oceans.mp4" type='video/mp4'>
         <source src="MY_VIDEO.webm" type='video/webm'>
@@ -23,7 +23,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
- .video{
+@media screen and (min-width:750px){
+  .video{
    border: 1px solid #ccc;
    width: 100%;
    height: 600px;
@@ -40,5 +41,26 @@ export default {
      height: 600px;
    }
  }
+}
+@media screen and (max-width:750px){
+  .video{
+   border: 1px solid #ccc;
+   width: 100%;
+   height: 200px;
+   display: flex;
+   justify-content: center;
+   background-color: black;
+   .content{
+     width: 100%;
+     background-color: #627085;
+     height: 200px;
+   }
+   #my-video{
+     width: 100%;
+     height: 200px;
+   }
+ }
+}
+
 
 </style>

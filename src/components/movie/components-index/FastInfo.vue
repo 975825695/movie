@@ -44,7 +44,8 @@ export default {
     transform: translate3d(0,-150px,0);
   }
 }
-  nav{
+@media screen and (min-width:750px){
+ nav{
     margin-top: 20px;
     width: 1024px;
     height: 50px;
@@ -66,4 +67,31 @@ export default {
       }
     }
   }
+}
+@media screen and (max-width:750px){
+ nav{
+    margin-top: 20px;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    ul{
+      width: 100%;
+      height: 50px;
+      animation: autoScroll 20s infinite normal ;
+      &:hover{
+        animation-play-state: paused;
+      }
+      li{
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        line-height: 50px;
+        font-size: 24px;
+        color: #bbb;
+        list-style-type: square;
+      }
+    }
+  }
+}
 </style>

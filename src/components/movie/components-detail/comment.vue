@@ -3,7 +3,7 @@
     <header>
       评论专区
     </header>
-    <p>热门评论</p>
+    <p class="topTitle">热门评论</p>
     <section v-for="(list,index) in commentList" :key="index">
       <div class="img">
         <img :src="list.img" alt="">
@@ -33,50 +33,106 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.comment{
-  background-color: #efefef;
-  width: 800px;
-  header{
-    font-size: 30px;
-    border-bottom: 2px solid #ccc;
-  }
-  p:nth-of-type(1){
-    font-size: 20px;
-    margin-left: 40px;
-    height: 40px;
-    line-height: 40px;
-  }
-  section{
+@media screen and (min-width:750px){
+  .comment{
+    background-color: #efefef;
     width: 800px;
-    display: flex;
-    height: 150px;
-    .img{
-      width: 150px;
-      height: 150px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      img{
-        width: 100px;
-        height: 100px;
-        background-color: #ccc;
-        display: inline-block;
-      }
+    header{
+      font-size: 30px;
+      border-bottom: 2px solid #ccc;
     }
-    .main{
-      width:650px;
-      .title{
+    p:nth-of-type(1){
+      font-size: 20px;
+      margin-left: 40px;
+      height: 40px;
+      line-height: 40px;
+    }
+    section{
+      width: 800px;
+      display: flex;
+      height: 150px;
+      .img{
+        width: 150px;
+        height: 150px;
         display: flex;
-        height: 40px;
-        justify-content: space-between;
-        p{
-          line-height: 40px;
+        justify-content: center;
+        align-items: center;
+        img{
+          width: 100px;
+          height: 100px;
+          background-color: #ccc;
+          display: inline-block;
         }
       }
-      .main_com{
-        border-top: 1px solid #ccc;
+      .main{
+        width:650px;
+        .title{
+          display: flex;
+          height: 40px;
+          justify-content: space-between;
+          p{
+            line-height: 40px;
+          }
+        }
+        .main_com{
+          border-top: 1px solid #ccc;
+        }
       }
     }
   }
 }
+@media screen and (max-width:750px){
+  .comment{
+    background-color: hsl(0, 0%, 94%);
+    width: 100%;
+    header{
+      padding-left: 10px;
+      // margin-left: 10px;
+      font-size: 24px;
+      height: 40px;
+      line-height: 40px;
+      border-bottom: 2px solid #ccc;
+    }
+    .topTitle{
+      font-size: 20px;
+      margin-left: 40px;
+      height: 40px;
+      line-height: 40px;
+    }
+    section{
+      width: 100%;
+      display: flex;
+      // height: 150px;
+      margin-bottom: 20px;
+      .img{
+        width: 150px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+          width: 100px;
+          height: 100px;
+          background-color: #ccc;
+          display: inline-block;
+        }
+      }
+      .main{
+        // width:calc(100%-150px);
+        .title{
+          display: flex;
+          height: 40px;
+          justify-content: space-between;
+          p{
+            line-height: 40px;
+          }
+        }
+        .main_com{
+          border-top: 1px solid #ccc;
+        }
+      }
+    }
+  }
+}
+
 </style>
