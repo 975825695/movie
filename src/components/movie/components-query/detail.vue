@@ -21,7 +21,7 @@
 </template>
 
 <script>
-
+import { Indicator } from 'mint-ui'
 export default {
   data () {
     return {
@@ -36,11 +36,15 @@ export default {
     getQuery:function(){
       let name = this.$route.params.name
       if (!name) {
-        console.log(1)
         this.dataBool = false
       } else {
+        Indicator.open({
+          text: '加载中...',
+          spinnerType: 'fading-circle'
+        });
         axios.get(`/v2/movie/search?q=${name}`)
           .then((response) => {
+          Indicator.close();
           if (response.data.subjects.length === 0) {
             this.dataBool = false
           } else {

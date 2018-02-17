@@ -20,6 +20,14 @@
           <span v-for="(avator,index) in item.casts" :key="index">{{avator.name}}</span>
         </p>
       </router-link>
+      <div class="hotPart" v-if="this.title==='正在热映'">
+        <div class="hotTitle">
+          <p>点击排行</p>
+        </div>
+        <ul>
+          <li v-for="(item,index) in hotPart" :key="index">{{item.title}}</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -31,7 +39,14 @@ export default {
     return {
       list:[],
       chart:false,
-      clickYear:0
+      clickYear:0,
+      hotPart:[
+        {title:'奇迹男孩'},
+        {title:'第一夫人'},
+        {title:'神秘巨星'},
+        {title:'卧底巨星'},
+        {title:'捉妖记2'}
+      ]
     }
   },
   props:{
@@ -55,6 +70,9 @@ export default {
       axios.post(`/vv/movie/${name}`,{})
         .then((response) => {
           this.list = response.data[0].subjects.splice(0,5)
+          if(this.title==='正在热映'){
+            this.list = response.data[0].subjects.splice(0,3)
+          }
       })
     },
     changeYear:function(year){
@@ -91,6 +109,8 @@ export default {
 @media screen and (min-width:750px){
   .index-content{
     width: 1024px;
+    background-color: #Fff;
+    margin-top: 20px;
     .title{
       font-size: 25px;
       color: #609fbf;
@@ -155,6 +175,38 @@ export default {
           text-overflow: ellipsis;
              overflow: hidden;
              white-space: nowrap;
+        }
+      }
+      .hotPart{
+        margin-top: -50px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .hotTitle{
+          font-size: 24px;
+          color: #609fbf;
+          text-align: center;
+        }
+        ul{
+          margin-top: 10px;
+          width: 250px;
+          border: 2px solid #ccc;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          li{
+            margin-top: 15px;
+            text-align: center;
+            width: 150px;
+            border-bottom: 1px solid #ccc;
+            font-size: 22px;
+            margin-left: 30px;
+            list-style: decimal;
+            &:nth-of-type(5){
+              margin-bottom: 20px;
+            }
+          }
         }
       }
     }
@@ -225,6 +277,35 @@ export default {
           text-overflow: ellipsis;
              overflow: hidden;
              white-space: nowrap;
+        }
+      }
+      .hotPart{
+        margin-top: -35px;
+        width: 165px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .hotTitle{
+          font-size: 22px;
+          color: #609fbf;
+          text-align: center;
+        }
+        ul{
+          margin-top: 5px;
+          width: 160px;
+          border: 2px solid #ccc;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          li{
+            margin-top: 5px;
+            text-align: center;
+            width: 100px;
+            border-bottom: 1px solid #ccc;
+            font-size: 16px;
+            margin-left: 30px;
+            list-style: decimal;
+          }
         }
       }
     }

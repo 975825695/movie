@@ -46,6 +46,7 @@ export default {
 }
 @media screen and (min-width:750px){
  nav{
+   background-color: #fff;
     margin-top: 20px;
     width: 1024px;
     height: 50px;

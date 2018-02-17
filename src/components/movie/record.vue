@@ -42,12 +42,18 @@ export default {
   },
   methods:{
     getData:function(){
-      if (this.recordIdList.length===0) {
-        console.log(1)
+      const user = sessionStorage.getItem('user')
+      var _this = this
+      if (user) {
+        if (this.recordIdList.length===0) {
         this.hasRecord = false
+        } else {
+          this.hasRecord = true
+          this.list = this.recordIdList
+        }
       } else {
-        this.hasRecord = true
-        this.list = this.recordIdList
+        alert('请先登录')
+        _this.$router.push({path:'login'})
       }
     }
   },

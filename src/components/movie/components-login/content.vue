@@ -16,7 +16,7 @@
 </template>
 
 <script>
-
+import { Toast } from "mint-ui";
 export default {
   data () {
     return {
@@ -35,7 +35,11 @@ export default {
     },
     register:function(){
       if (!this.account||!this.password) {
-        alert('用户名或密码不能为空')
+        // Toast('用户名或密码不能为空')
+        Toast({
+          duration: '3000',
+          message: '用户名或密码不能为空'
+        });
       } else {
         let params = {
         account : this.account,
@@ -45,17 +49,26 @@ export default {
         .then((response) => {
           console.log(response)
           if (response.data.retCode === 1) {
-            alert('请再次登录，谢谢')
+            Toast({
+              duration: '3000',
+              message: '请再次登录，谢谢'
+            });
             this.activeBool = true
           } else if (response.data.retCode === 2) {
-            alert('此用户已存在,请重新输入谢谢')
+            Toast({
+              duration: '3000',
+              message: '此用户已存在，请重新输入谢谢'
+            });
           }
       })
       }
     },
     login:function(){
        if (!this.account||!this.password) {
-        alert('用户名或密码不能为空')
+        Toast({
+          duration: '3000',
+          message: '用户名或密码不能为空'
+        });
       } else {
         let params = {
         account : this.account,
@@ -73,9 +86,15 @@ export default {
             sessionStorage.setItem("photo", response.data.list.photo);
             window.location.href = '/'
           } else if (response.data.retCode === 2) {
-            alert('密码错误')
+            Toast({
+              duration: '3000',
+              message: '密码错误'
+            });
           } else if (response.data.retCode === 3) {
-            alert('用户名不存在')
+            Toast({
+              duration: '3000',
+              message: '用户名不存在'
+            });
           }
       })
       }
