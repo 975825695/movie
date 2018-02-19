@@ -41,7 +41,6 @@ router.post('/local/login/createAccount',(req,res) => {
           }
         }
     });
-
 });
 // 登录
 router.post('/local/login/getAccount',(req,res) => {
@@ -289,6 +288,43 @@ router.post('/local/login/queryUserLike',(req,res) => {
         res.send(err);
     } else {
         res.send(data)
+    }
+  });
+});
+// 存储点击数
+router.post('/local/login/createClick',(req,res) => {
+    let newClick = new models.Click({
+        title : req.body.title,
+        count : 1
+    });
+    models.Click.findOne({title:req.body.title},(err,data) => {
+      if(data){
+        let count = 1 + data.count
+        models.Click.update({title:req.body.title},{$set:{count:count}},(err,data) => {
+          if (err) {
+              res.send(err);
+          } else {
+              res.send(data);
+          }
+        });
+      }else {
+        newClick.save((err,data) => {
+          if (err) {
+              res.send(err);
+          } else {
+              res.send(data);
+          }
+       });
+      }
+
+    });
+});
+router.post('/local/login/findClick',(req,res) => {
+  models.Click.find((err,data) => {
+    if (err) {
+      res.send(err);
+    } else {
+        res.send(data);
     }
   });
 });

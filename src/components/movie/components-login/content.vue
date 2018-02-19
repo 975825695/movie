@@ -8,7 +8,9 @@
       <div class="input">
         <input type="text" placeholder="请输入账号" maxlength="5" v-model="account">
         <input type="password" placeholder="密码" v-model="password">
-        <input type="button" value="登录" v-if="activeBool" @click="login()">
+        <div id="mpanel1" class="ccap">
+        </div>
+        <input type="button" id="check-btn" value="登录" v-if="activeBool" @click="login()">
         <input type="button" value="注册" v-if="!activeBool" @click="register()">
       </div>
     </div>
@@ -24,14 +26,49 @@ export default {
       dataBool:true,
       activeBool:true,
       account:'',
-      password:''
+      password:'',
+      ccapShow:false
     }
   },
-  created () {
+  mounted () {
+    this.ccapInit()
   },
   methods:{
     beActive:function(bool){
       this.activeBool = bool;
+    },
+    ccapInit:function(){
+      var _this = this
+      $('#mpanel1').slideVerify({
+    //滑动验证码type=1，拼图验证码type=2
+        type : 2,
+        mode : 'pop',
+        vOffset : 5,
+        vSpace : 5,
+        explain : '向右滑动完成验证',
+        imgUrl : '../../../../static/images/',
+        imgName : ['2.jpg', '4042.jpg'],
+        imgSize : {
+          width: '100%',
+          height: '200px',
+        },
+        blockSize : {
+          width: '40px',
+          height: '40px',
+        },
+        barSize : {
+          width: '100%',
+          height : '40px',
+        },
+        ready : function() {
+        },
+        success : function() {
+          _this.ccapShow = true
+        },
+        error : function() {
+          alert('验证码不匹配！');
+        }
+      })
     },
     register:function(){
       if (!this.account||!this.password) {
@@ -39,6 +76,11 @@ export default {
         Toast({
           duration: '3000',
           message: '用户名或密码不能为空'
+        });
+      } else if (!this.ccapShow) {
+        Toast({
+          duration: '3000',
+          message: '请先滑动验证验证码'
         });
       } else {
         let params = {
@@ -68,6 +110,11 @@ export default {
         Toast({
           duration: '3000',
           message: '用户名或密码不能为空'
+        });
+      } else if (!this.ccapShow) {
+        Toast({
+          duration: '3000',
+          message: '请先滑动验证验证码'
         });
       } else {
         let params = {
@@ -149,9 +196,16 @@ export default {
       }
       .input{
         width: 300px;
+        .ccap{
+          width: 300px;
+          border: 1px solid #ccc;
+          height: 40px;
+          margin-top: 30px;
+          z-index: 99;
+        }
         input{
           width: 300px;
-          margin-top: 50px;
+          margin-top: 30px;
           height: 40px;
           text-align: center;
         }
@@ -205,9 +259,16 @@ export default {
       }
       .input{
         width: 300px;
+        .ccap{
+          width: 300px;
+          border: 1px solid #ccc;
+          height: 40px;
+          margin-top: 30px;
+          z-index: 99;
+        }
         input{
           width: 300px;
-          margin-top: 50px;
+          margin-top: 30px;
           height: 50px;
           text-align: center;
           // bottom: 1px solid #ccc;

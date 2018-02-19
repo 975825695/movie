@@ -72,6 +72,10 @@ export default {
           this.list = response.data[0].subjects.splice(0,5)
           if(this.title==='正在热映'){
             this.list = response.data[0].subjects.splice(0,3)
+             axios.post('/local/login/findClick',{})
+            .then((response) => {
+                this.hotPart = response.data.sort((a,b)=>b.count-a.count).splice(0,5)
+            })
           }
       })
     },

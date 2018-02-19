@@ -30,6 +30,10 @@ const Documentchema = mongoose.Schema({
   document: Object,
   comment: Array
 });
+const clickSchema = mongoose.Schema({
+  title: String,
+  count: Number
+});
 
 /************** 定义模型Model **************/
 const Models = {
@@ -38,6 +42,7 @@ const Models = {
     In_theater : mongoose.model('in_theater',In_theaterSchema),
     Top20 : mongoose.model('top20',Top20Schema),
     Document : mongoose.model('document',Documentchema),
+    Click : mongoose.model('click',clickSchema),
 }
 
 module.exports = Models;

@@ -29,10 +29,20 @@ export default {
     ...mapActions(['getDetailList']),
     getData: function(){
       let id = this.$route.params.id
+      var title
       axios.get(`/v2/movie/subject/${id}`)
         .then((response) => {
           this.list = response.data
           this.getDetailList(response.data)
+          title = response.data.title
+      }).then(()=>{
+        let params = {
+          title:title
+        }
+        axios.post('/local/login/createClick',params)
+        .then((response) => {
+          // console.log(response.data)
+        })
       })
     }
   },
