@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "echarts": "^4.0.2",
     "formidable": "^1.1.1",
     "mint-ui": "^2.2.13",
     "moment": "^2.20.1",

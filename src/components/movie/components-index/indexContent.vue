@@ -10,7 +10,6 @@
     </p>
     <div class="content-list">
       <router-link :to="{path:`/detail/${item.id}`}" class="list" v-for="(item,index) in list" :key="index">
-
         <img :src="item.images.small" alt="">
         <p>
           <span>{{item.title}}</span>
@@ -22,17 +21,23 @@
       </router-link>
       <div class="hotPart" v-if="this.title==='正在热映'">
         <div class="hotTitle">
-          <p>点击排行</p>
+          <p class="showTitle" @click="showEcharts()">点击排行</p>
         </div>
         <ul>
           <li v-for="(item,index) in hotPart" :key="index">{{item.title}}</li>
         </ul>
       </div>
     </div>
+    <div class="echarts" v-if="this.title==='正在热映'" v-show="echartsBool">
+        <div id="pic">
+
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
+import echarts from "echarts";
 import { mapState, mapActions } from 'vuex'
 export default {
   data () {
@@ -46,7 +51,8 @@ export default {
         {title:'神秘巨星'},
         {title:'卧底巨星'},
         {title:'捉妖记2'}
-      ]
+      ],
+      echartsBool:true
     }
   },
   props:{
@@ -66,6 +72,38 @@ export default {
   },
   methods:{
     ...mapActions(['getDetailList']),
+    showEcharts:function(){
+      this.echartsBool = !this.echartsBool
+    },
+    echartsInit:function(){
+      var list = this.hotPart
+      var titleList = []
+      var countList = []
+      for (let key of Object.keys(list)) {
+        titleList.push(list[key].title)
+        countList.push(list[key].count)
+      }
+      const myChart = echarts.init(document.querySelector('#pic'))
+      var option = {
+            title: {
+                text: '点击量排行一览'
+            },
+            tooltip: {},
+            legend: {
+                data:['111']
+            },
+            xAxis: {
+                data: titleList
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'bar',
+                data: countList
+            }]
+        };
+        myChart.setOption(option);
+    },
     getData:function(name){
       axios.post(`/vv/movie/${name}`,{})
         .then((response) => {
@@ -75,6 +113,7 @@ export default {
              axios.post('/local/login/findClick',{})
             .then((response) => {
                 this.hotPart = response.data.sort((a,b)=>b.count-a.count).splice(0,5)
+                this.echartsInit()
             })
           }
       })
@@ -191,6 +230,9 @@ export default {
           font-size: 24px;
           color: #609fbf;
           text-align: center;
+          p{
+            cursor: pointer;
+          }
         }
         ul{
           margin-top: 10px;
@@ -212,6 +254,17 @@ export default {
             }
           }
         }
+      }
+    }
+    .echarts{
+      width: 1024px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      div{
+        width: 600px;
+        height: 250px;
       }
     }
   }
@@ -311,6 +364,17 @@ export default {
             list-style: decimal;
           }
         }
+      }
+    }
+    .echarts{
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      div{
+        width: 80%;
+        height: 200px;
       }
     }
   }
