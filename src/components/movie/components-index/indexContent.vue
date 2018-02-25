@@ -52,7 +52,7 @@ export default {
         {title:'卧底巨星'},
         {title:'捉妖记2'}
       ],
-      echartsBool:true
+      echartsBool:false
     }
   },
   props:{
@@ -88,13 +88,27 @@ export default {
             title: {
                 text: '点击量排行一览'
             },
-            tooltip: {},
+            tooltip: {
+              position:function(point,params,dom,rect,size){
+                return [point[0],'10%']
+              },
+              padding:[5,10],
+              confine:true
+            },
             legend: {
                 data:['111']
             },
             xAxis: {
-                data: titleList
+                data: titleList,
+                axisLabel: {
+                  interval:0,
+                  // rotate:40
+                }
             },
+            // grid: {
+            //   left: '10%',
+            //   bottom:'65%'
+            // },
             yAxis: {},
             series: [{
                 name: '销量',
@@ -242,13 +256,18 @@ export default {
           flex-direction: column;
           align-items: center;
           li{
+            list-style-position: inside;
             margin-top: 15px;
-            text-align: center;
+            // text-align: center;
             width: 150px;
             border-bottom: 1px solid #ccc;
             font-size: 22px;
             margin-left: 30px;
-            list-style: decimal;
+            list-style-type: decimal;
+            // list-style: decimal;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+            overflow: hidden;
             &:nth-of-type(5){
               margin-bottom: 20px;
             }
@@ -361,7 +380,11 @@ export default {
             border-bottom: 1px solid #ccc;
             font-size: 16px;
             margin-left: 30px;
-            list-style: decimal;
+            list-style-position: inside;
+            list-style-type: decimal;
+            white-space:nowrap;
+            text-overflow:ellipsis;
+            overflow: hidden;
           }
         }
       }
