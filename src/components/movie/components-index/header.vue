@@ -47,7 +47,7 @@ export default {
     logout:function(){
        sessionStorage.removeItem('name');
        sessionStorage.removeItem('account');
-       window.location.href='/'
+       this.$router.push({path:'/'})
     },
     toVip:function(){
       const loginvalid =  this.loginValid()

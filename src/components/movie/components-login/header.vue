@@ -18,7 +18,7 @@ export default {
   },
   methods:{
     goToHome:function(){
-      window.location.href = "/"
+      this.$router.push({path:'/'})
     }
   },
   components:{

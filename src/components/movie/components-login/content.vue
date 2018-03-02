@@ -121,6 +121,7 @@ export default {
         account : this.account,
         password : this.password
       }
+      var _this = this
       axios.post('/local/login/getAccount',params)
         .then((response) => {
           console.log(response.data)
@@ -131,7 +132,8 @@ export default {
             sessionStorage.setItem("vip", response.data.list.vip);
             sessionStorage.setItem("account", response.data.list.account);
             sessionStorage.setItem("photo", response.data.list.photo);
-            window.location.href = '/'
+            // window.location.href = '/'
+            _this.$router.push({path:'/'})
           } else if (response.data.retCode === 2) {
             Toast({
               duration: '3000',
