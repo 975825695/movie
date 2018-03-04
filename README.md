@@ -1,6 +1,6 @@
 # vue-node
 
-> A Vue.js project
+> 个人用的在线影院，因为资源问题暂无影视资源。实现大部分功能，前后端，已上线，地址在简历。
 
 ## Build Setup
 
