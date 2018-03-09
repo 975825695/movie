@@ -11,6 +11,10 @@ import store from './store'
 
 Vue.use(vueResource)
 Vue.use(MintUI)
+// 控制每一个页面跳转至后滚动条回滚
+router.afterEach((to,from,next) => {
+  window.scrollTo(0,0);
+});
 Vue.config.productionTip = false
 window.axios = axios
 /* eslint-disable no-new */
