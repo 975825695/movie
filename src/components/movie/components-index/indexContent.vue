@@ -142,7 +142,7 @@ export default {
       } else {
         axios.post('/vv/movie/top20',{})
         .then((response) => {
-          const topList =  response.data[2].subjects
+          const topList =  response.data[0].subjects
           let arr = []
           for (const key in topList) {
             if (topList[key].year === year) {
