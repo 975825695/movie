@@ -1,23 +1,38 @@
 <template>
   <div class="video">
     <div class="content">
-      <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto"
-      poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
+      <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
         <source src="http://vjs.zencdn.net/v/oceans.mp4" type='video/mp4'>
         <source src="MY_VIDEO.webm" type='video/webm'>
       </video>
+      <!-- <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto"
+      poster="http://img.movie.kanimg.kankan.com/submovie_img/104/104188/17110101_2_154x90.jpg" data-setup="{}">
+        <source src="http://js.kankan.com/player/mp4/KKPlayer2.2.swf?v=5.5&popup=1" type='video/mp4'>
+        <source src="MY_VIDEO.webm" type='video/webm'>
+      </video> -->
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
-
+      list : []
     }
   },
-  components:{
+  props:{
+    videolist:Object
+  },
+  computed: {
+    ...mapState(['detailList'])
+  },
+  watch : {
+    videolist (cur,old) {
+      this.list = cur
+      console.log(this.list)
+    }
   }
 }
 </script>

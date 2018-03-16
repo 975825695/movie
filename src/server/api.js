@@ -18,7 +18,8 @@ router.post('/local/login/createAccount',(req,res) => {
         vip:0,
         name:'新用户',
         document:[],
-        userLike:{love:0,fight:0,comic:0}
+        userLike:{love:0,fight:0,comic:0},
+        movieName:[]
     });
     // 保存数据newAccount数据进mongoDB
     models.Login.find({account:req.body.account},(err,data) => {
@@ -280,6 +281,56 @@ router.post('/local/login/saveUserLikes',(req,res) => {
     });
   });
 });
+// 保存电影兴趣推荐
+router.post('/local/login/saveMovieName',(req,res) => {
+
+  models.Login.findOne({account:req.body.account},(err,data) => {
+    var movieNamelist = data.movieName
+    var spliceArr = {}
+    function test (array,name) {
+      let temp = ''
+      for (const index in array) {
+        if(array[index].name === name) {
+          spliceArr = array[index]
+          movieNamelist.splice(index,1)
+          temp = 'have'
+        } else {
+          temp = 'notHave'
+        }
+      }
+      return temp
+    }
+    var bool = test(movieNamelist,req.body.movieName)
+    if(bool === 'have'){
+      spliceArr.count++
+      movieNamelist.push(spliceArr)
+      console.log(movieNamelist)
+    }else if (bool === 'notHave'){
+      movieNamelist = [...movieNamelist,{id:movieNamelist.length,name:req.body.movieName,count:1}]
+    }
+    let movieName = movieNamelist
+    models.Login.update({account:req.body.account},{$set:{movieName}},(err,data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    });
+  });
+});
+// 根据电影兴趣推荐查询相关文章
+router.post('/local/login/queryMovieName',(req,res) => {
+  let movieName = req.body.movieName
+  console.log(movieName)
+  models.Document.find({$where:`this.document.movieName.indexOf('${movieName}') != -1`},(err,data) => {
+    if (err) {
+        res.send(err);
+    } else {
+        res.send(data)
+    }
+  });
+});
+
 // 根据兴趣推荐查询相关文章
 router.post('/local/login/queryUserLike',(req,res) => {
   let userLike = req.body.userLike

@@ -1,9 +1,10 @@
 <template>
   <div class="write">
     <div class="title">
-      <select v-model="selected">
+      <!-- <select v-model="selected">
         <option :value="list.text" v-for="(list,index) in select" :key="index">{{list.text}}</option>
-      </select>
+      </select> -->
+      <input type="text" placeholder="请输入电影名称" v-model="movieName">
       <input type="text" placeholder="请输入文章标题" v-model="title">
     </div>
     <div ref="editor" class="editor">
@@ -40,6 +41,7 @@ import moment from 'moment'
 export default {
   data () {
     return {
+      movieName:'',
       selected:'原创',
       select:[{text:'原创'},{text:'转载'},{text:'翻译'}],
       ediTor:{},
@@ -68,6 +70,8 @@ export default {
         alert('请至少选择一种分类标签')
       }else if(!this.ediTor.txt.text()){
         alert('请输入文章内容')
+      }else if (this.movieName === ''){
+        alert('请输入电影名称')
       }else{
         let tag = []
         if(this.comic){
@@ -90,7 +94,8 @@ export default {
           content:this.ediTor.txt.html(),
           title:this.title,
           selectedName:this.selected,
-          tags:tag
+          tags:tag,
+          movieName:this.movieName
         }
         let params = {
           account:account,
@@ -150,7 +155,16 @@ export default {
         font-size: 22px;
       }
     }
-    input{
+    input:nth-of-type(1){
+      width: 180px;
+      padding: 0 20px;
+      background-color: #eee;
+      border: none;
+      height: 40px;
+      line-height: 40px;
+      font-size: 22px;
+    }
+    input:nth-of-type(2){
       width: 630px;
       height: 40px;
       line-height: 40px;
