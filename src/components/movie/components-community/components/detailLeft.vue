@@ -5,6 +5,7 @@
       <p>{{dataList.name}}</p>
       <p>{{dataList.time}}</p>
       <p><span >{{tagList}}</span></p>
+      <p>{{docu.movieName}}</p>
     </div>
     <p class="title">
       {{docu.title}}
@@ -46,7 +47,7 @@ export default {
       account:'',
       userInfo:'',
       comment:'',
-      commentList:[]
+      commentList:[],
     }
   },
   created () {
@@ -54,9 +55,10 @@ export default {
      let photo = sessionStorage.getItem('photo')
   },
   methods: {
-    ...mapActions(['saveUserLike']),
+    ...mapActions(['saveUserLike','saveMovieName']),
     getData:function(){
       const id = this.$route.params.id
+      var movieName
       let params = {
         id : id
       }
@@ -67,7 +69,7 @@ export default {
           this.docu = response.data.document
           this.account = response.data.account
           this.commentList = response.data.comment
-          this.saveUserLike(response.data.document.tags)
+          movieName = response.data.document.movieName
       }).then(()=>{
         let params = {
           account :this.account
@@ -76,6 +78,15 @@ export default {
         .then((response)=>{
           this.userInfo = response.data[0]
           this.photoUrl = '../../../'+this.userInfo.photo
+        })
+      }).then(()=>{
+        let params = {
+          account :this.account,
+          movieName : movieName
+        }
+        axios.post('/local/login/saveMovieName',params)
+        .then((response)=>{
+          console.log(response.data)
         })
       })
     },
@@ -138,13 +149,16 @@ section{
         width: 100px;
       }
       p:nth-of-type(2){
-        width: 200px;
+        width: 300px;
         white-space:nowrap;
         text-overflow:ellipsis;
         overflow: hidden;
       }
       p:nth-of-type(3){
         width: 100px;
+      }
+      p:nth-of-type(4){
+        width: 200px;
       }
     }
     .title{

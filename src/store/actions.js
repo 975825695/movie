@@ -11,8 +11,12 @@ export const getUserInfo = async ({ commit }, data) => {
 }
 // 兴趣推荐异步方法
 export const saveUserLike = async ({ commit }, data) => {
-  console.log(data)
+  // console.log(data)
   commit(types.SAVE_USERLIKE, data)
+}
+export const saveMovieName = async ({ commit }, data) => {
+  // console.log(data)
+  commit(types.SAVE_MOVIENAME, data)
 }
 // 兴趣推荐刷新之后清空
 export const delUserLike = async ({ commit }, data) => {

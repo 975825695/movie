@@ -31,6 +31,7 @@
         <p>{{list.name}}</p>
         <p>{{list.time}}</p>
         <p><span>{{list.document.tags}}</span></p>
+        <p>{{list.document.movieName}}</p>
       </div>
       <div class="title">
         {{list.document.title}}
@@ -232,9 +233,11 @@ section{
           text-overflow:ellipsis;
           overflow: hidden;
         }
-
         p:nth-of-type(1){
           margin-left: 20px;
+        }
+        p:nth-of-type(2){
+          width: 300px;
         }
         p:nth-of-type(3){
           span{

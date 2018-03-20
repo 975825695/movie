@@ -2,15 +2,15 @@
   <section>
     <div class="recommend">
       <div class="title">
-        您可能感兴趣
+        {{title}}
       </div>
       <div class="recomList">
         <p @click="ToDetail(item._id)" v-for="(item,index) in list" :key="index">{{item.document.title}}</p>
       </div>
     </div>
-    <div id="map" class="map">
+    <!-- <div id="map" class="map">
 
-    </div>
+    </div> -->
   </section>
 </template>
 
@@ -18,60 +18,67 @@
 export default {
   data() {
     return {
-      list: {}
+      list: {},
+      title:''
     };
   },
   created() {
     this.getData();
   },
   mounted() {
-    this.initMap();
+    // this.initMap();
   },
   methods: {
     getData: function() {
       let user = sessionStorage.getItem("user");
       user = JSON.parse(user);
-      let userLike = user.userLike;
-      let list = Object.keys(userLike).sort(
-        (a, b) => userLike[b] - userLike[a]
-      );
-      // let list2 = Object.values(userLike).sort((a,b)=>a-b)
-      let like = "";
-      if (list[0] === "love") {
-        like = "爱情";
-      } else if (list[0] === "fight") {
-        like = "战争";
-      } else if (list[0] === "comic") {
-        like = "喜剧";
-      }
-      let params = {
-        userLike: like
-      };
-      axios.post("/local/login/queryUserLike", params).then(response => {
-        this.list = response.data;
-      });
+      let movieName = user.movieName;
+      if (movieName.length === 0) {
+        this.title = '暂无推荐信息'
+      } else {
+        // let list = Object.keys(movieName).sort(
+        //   (a, b) => movieName[b] - movieName[a]
+        // );
+        this.title = '猜您感兴趣'
+        let list = movieName.sort((b,a)=>a.count - b.count)
+        // let list = Object.values(movieName).sort((a,b)=>a-b)
+        // let like = "";
+        // if (list[0] === "love") {
+        //   like = "爱情";
+        // } else if (list[0] === "fight") {
+        //   like = "战争";
+        // } else if (list[0] === "comic") {
+        //   like = "喜剧";
+        // }
+        let params = {
+          movieName: list[0].name
+        };
+        axios.post("/local/login/queryMovieName", params).then(response => {
+          this.list = response.data;
+        });
+        }
     },
     ToDetail: function(id) {
       window.location.href = `#/community/detail/${id}`;
     },
-    initMap: function() {
-      var map = new BMap.Map("map");
-      // 创建地图实例
-      var point = new BMap.Point(116.404, 39.915);
-      // 创建点坐标
-      map.centerAndZoom(point, 10);
-      var geolocation = new BMap.Geolocation();
-      geolocation.getCurrentPosition(function(r){
-        if(this.getStatus() == BMAP_STATUS_SUCCESS){
-          var mk = new BMap.Marker(r.point);
-          map.addOverlay(mk);
-          map.panTo(r.point);
-        }
-        else {
-          alert('failed'+this.getStatus());
-        }
-      },{enableHighAccuracy: true})
-    }
+    // initMap: function() {
+    //   var map = new BMap.Map("map");
+    //   // 创建地图实例
+    //   var point = new BMap.Point(116.404, 39.915);
+    //   // 创建点坐标
+    //   map.centerAndZoom(point, 10);
+    //   var geolocation = new BMap.Geolocation();
+    //   geolocation.getCurrentPosition(function(r){
+    //     if(this.getStatus() == BMAP_STATUS_SUCCESS){
+    //       var mk = new BMap.Marker(r.point);
+    //       map.addOverlay(mk);
+    //       map.panTo(r.point);
+    //     }
+    //     else {
+    //       alert('failed'+this.getStatus());
+    //     }
+    //   },{enableHighAccuracy: true})
+    // }
   }
 };
 </script>

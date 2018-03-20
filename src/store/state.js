@@ -3,5 +3,6 @@ export default {
   detailList:{},
   recordIdList:[],
   userInfo:{},
-  userLike:{'love':0,'fight':0,'comic':0}
+  userLike:{'love':0,'fight':0,'comic':0},
+  movieName:{}
 }

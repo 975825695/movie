@@ -14,6 +14,9 @@ export default {
   [types.DEL_USERLIKE] (state, data) {
     state.userLike = {'love':0,'fight':0,'comic':0}
   },
+  [types.SAVE_MOVIENAME] (state, data) {
+    state.movieName = {'name':data}
+  },
   [types.SAVE_USERLIKE] (state, data) {
     if (data === '爱情') {
       state.userLike.love += 1
