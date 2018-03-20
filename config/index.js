@@ -12,14 +12,14 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/local': {
-        target: 'http://localhost:8088/local/',
+        target: 'http://192.168.191.1:8088/local/',
         changeOrigin: true,
         pathRewrite: {
           '^/local': ''
         }
       },
       '/vv': {
-        target: 'http://localhost:8088/vv/',
+        target: 'http://192.168.191.1:8088/vv/',
         changeOrigin: true,
         pathRewrite: {
           '^/vv': ''
