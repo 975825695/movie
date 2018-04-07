@@ -1,8 +1,8 @@
 <template>
   <div class="video">
     <div class="content">
-      <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}">
-        <source src="http://vjs.zencdn.net/v/oceans.mp4" type='video/mp4'>
+      <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto"  data-setup="{}">
+        <source :src="src" type='video/mp4'>
         <source src="MY_VIDEO.webm" type='video/webm'>
       </video>
       <!-- <video id="my-video" class="video-js vjs-big-play-centered" controls preload="auto"
@@ -19,21 +19,37 @@ import { mapState, mapActions } from 'vuex'
 export default {
   data () {
     return {
-      list : []
+      list : [],
+      src : 'http://vjs.zencdn.net/v/oceans.mp4'
     }
   },
-  props:{
-    videolist:Object
+  // props:{
+  //   videolist:Object
+  // },
+  created () {
+    this.getId()
+  },
+  methods : {
+    getId:function(){
+      const id =  parseInt(this.$route.params.id)
+      if ( id === 27073291 ) {
+        this.src = '../../../../static/src/taikongjiuyuan.mp4'
+      } else if (id === 22265634) {
+        this.src = '../../../../static/src/xingqiudazhan.mp4'
+      } else if (id === 26984538) {
+        this.src = '../../../../static/src/wodijuxing.mp4'
+      }
+    }
   },
   computed: {
     ...mapState(['detailList'])
   },
-  watch : {
-    videolist (cur,old) {
-      this.list = cur
-      console.log(this.list)
-    }
-  }
+  // watch : {
+  //   videolist (cur,old) {
+  //     this.list = cur
+  //     console.log(this.list)
+  //   }
+  // }
 }
 </script>
 
