@@ -3,6 +3,10 @@
     <div class="nav-ul">
       <ul>
         <router-link to="/">首页</router-link>
+        <div>
+          <p>猜您想看:</p>
+          <p v-for="(item,index) in list " :key="index">{{item}}</p>
+        </div>
         <router-link to="/community/" @click.native="valiLogin()">影评社区</router-link>
       </ul>
     </div>
@@ -12,6 +16,11 @@
 <script>
 export default {
   name: 'app',
+  data () {
+    return {
+      list : ['飞呀飞','飞龙在天']
+    }
+  },
   methods:{
     valiLogin:function(){
       let account = sessionStorage.getItem('account')
@@ -43,6 +52,15 @@ export default {
       display: flex;
       justify-content: space-between;
       // height: 60px;
+      div{
+        width: 300px;
+        line-height: 50px;
+        color: #fff;
+        display: flex;
+        p{
+          width: 100px;
+        }
+      }
       a{
         color: #fff;
         height: 50px;

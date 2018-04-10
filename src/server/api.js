@@ -19,7 +19,8 @@ router.post('/local/login/createAccount',(req,res) => {
         name:'新用户',
         document:[],
         userLike:{love:0,fight:0,comic:0},
-        movieName:[]
+        movieName:[],
+        interestRec:[]
     });
     // 保存数据newAccount数据进mongoDB
     models.Login.find({account:req.body.account},(err,data) => {
@@ -310,6 +311,47 @@ router.post('/local/login/saveMovieName',(req,res) => {
     }
     let movieName = movieNamelist
     models.Login.update({account:req.body.account},{$set:{movieName}},(err,data) => {
+        if (err) {
+            res.send(err);
+        } else {
+            res.send(data);
+        }
+    });
+  });
+});
+// 存储首页的兴趣推荐
+router.post('/local/login/saveInterest',(req,res) => {
+  models.Login.findOne({account:req.body.account},(err,data) => {
+    var interestList = data.interestRec
+    var spliceArr = {}
+    function test (array,name) {
+      let temp = ''
+      if (array.length === 0) {
+        temp = 'notHave'
+      } else {
+        for (const index in array) {
+          if(array[index].name === name) {
+            spliceArr = array[index]
+            interestList.splice(index,1)
+            temp = 'have'
+          } else {
+            temp = 'notHave'
+          }
+        }
+      }
+      return temp
+    }
+    var bool = test(interestList,req.body.title)
+    console.log(bool)
+    if(bool === 'have'){
+      spliceArr.count++
+      interestList.push(spliceArr)
+      console.log(interestList)
+    }else if (bool === 'notHave'){
+      interestList = [...interestList,{id:interestList.length,name:req.body.title,count:1}]
+    }
+    let interestRec = interestList
+    models.Login.update({account:req.body.account},{$set:{interestRec}},(err,data) => {
         if (err) {
             res.send(err);
         } else {

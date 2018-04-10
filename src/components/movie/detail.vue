@@ -54,7 +54,14 @@ export default {
         }
         axios.post('/local/login/createClick',params)
         .then((response) => {
-          // console.log(response.data)
+        }).then(()=>{
+          let params = {
+            title:title,
+            account:sessionStorage.getItem('account'),
+          }
+          axios.post('/local/login/saveInterest',params)
+          .then((response) => {
+          })
         })
       })
     }
