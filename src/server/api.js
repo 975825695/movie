@@ -372,6 +372,19 @@ router.post('/local/login/queryMovieName',(req,res) => {
     }
   });
 });
+// 根据电影兴趣推荐查询相关文章
+router.post('/local/login/queryInterest',(req,res) => {
+  let newAccount = {
+    account : req.body.account
+  };
+  models.Login.findOne(newAccount,(err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
+          res.send(data.interestRec)
+      }
+  });
+});
 
 // 根据兴趣推荐查询相关文章
 router.post('/local/login/queryUserLike',(req,res) => {

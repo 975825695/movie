@@ -5,7 +5,7 @@
         <router-link to="/">首页</router-link>
         <div>
           <p>猜您想看:</p>
-          <p v-for="(item,index) in list " :key="index">{{item}}</p>
+          <p v-for="(item,index) in list " :key="index">{{item.name}}</p>
         </div>
         <router-link to="/community/" @click.native="valiLogin()">影评社区</router-link>
       </ul>
@@ -21,7 +21,25 @@ export default {
       list : ['飞呀飞','飞龙在天']
     }
   },
+  created () {
+    this.getInterest()
+  },
   methods:{
+    getInterest:function(){
+      const account = sessionStorage.getItem('account')
+      if (account) {
+        let params = {
+          account : account
+        }
+        axios.post('/local/login/queryInterest',params)
+          .then((response) => {
+            // console.log(response.data)
+            this.list = response.data.sort((a,b)=>b.count-a.count).splice(0,2)
+        })
+      } else {
+
+      }
+    },
     valiLogin:function(){
       let account = sessionStorage.getItem('account')
       if(!account) {
@@ -59,6 +77,10 @@ export default {
         display: flex;
         p{
           width: 100px;
+          white-space:nowrap;
+          text-overflow:ellipsis;
+          overflow: hidden;
+          cursor: pointer;
         }
       }
       a{

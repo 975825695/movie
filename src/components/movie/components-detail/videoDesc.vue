@@ -21,10 +21,14 @@ export default {
   computed: {
     ...mapState(['detailList'])
   },
+  // mounted () {
+  //   console.log(this.detailList)
+  // },
   watch:{
     detailList:function (cur,old) {
       this.list = cur
       this.average = cur.rating.average
+      console.log(cur)
     }
   },
   components:{

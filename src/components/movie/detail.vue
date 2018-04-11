@@ -46,7 +46,7 @@ export default {
           //   // response.data.imgSrc = idList[2].imgSrc
           //   this.videoList = {'src':idList[2].imgSrc}
           // }
-          // this.getDetailList(response.data)
+          this.getDetailList(response.data)
           title = response.data.title
       }).then(()=>{
         let params = {
