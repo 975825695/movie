@@ -31,6 +31,7 @@ export default {
     getData: function(){
       let id = this.$route.params.id
       var title
+      var genres
       axios.get(`/v2/movie/subject/${id}`)
         .then((response) => {
           this.list = response.data
@@ -48,6 +49,7 @@ export default {
           // }
           this.getDetailList(response.data)
           title = response.data.title
+          genres = response.data.genres
       }).then(()=>{
         let params = {
           title:title
@@ -58,6 +60,7 @@ export default {
           let params = {
             title:title,
             account:sessionStorage.getItem('account'),
+            genres:genres
           }
           axios.post('/local/login/saveInterest',params)
           .then((response) => {

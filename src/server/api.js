@@ -301,12 +301,14 @@ router.post('/local/login/saveMovieName',(req,res) => {
       }
       return temp
     }
-    var bool = test(movieNamelist,req.body.movieName)
+    var bool = ''
+    console.log(req.body.movieName)
+    bool = test(movieNamelist,req.body.movieName)
+    console.log(bool)
     if(bool === 'have'){
       spliceArr.count++
       movieNamelist.push(spliceArr)
-      console.log(movieNamelist)
-    }else if (bool === 'notHave'){
+    }else if (bool === 'notHave' || bool === ''){
       movieNamelist = [...movieNamelist,{id:movieNamelist.length,name:req.body.movieName,count:1}]
     }
     let movieName = movieNamelist
@@ -341,14 +343,15 @@ router.post('/local/login/saveInterest',(req,res) => {
       }
       return temp
     }
-    var bool = test(interestList,req.body.title)
+    var bool = ''
+    bool = test(interestList,req.body.title)
     console.log(bool)
     if(bool === 'have'){
       spliceArr.count++
       interestList.push(spliceArr)
       console.log(interestList)
-    }else if (bool === 'notHave'){
-      interestList = [...interestList,{id:interestList.length,name:req.body.title,count:1}]
+    }else if (bool === 'notHave'|| bool === ''){
+      interestList = [...interestList,{id:interestList.length,name:req.body.title,count:1,genres:req.body.genres}]
     }
     let interestRec = interestList
     models.Login.update({account:req.body.account},{$set:{interestRec}},(err,data) => {
@@ -434,6 +437,18 @@ router.post('/local/login/findClick',(req,res) => {
     }
   });
 });
+
+// react 测试
+router.post('/react/test',(req,res) => {
+  models.Login.find((err,data) => {
+    if (err) {
+        res.send(err);
+    } else {
+        res.send(data)
+    }
+});
+});
+
 
 
 

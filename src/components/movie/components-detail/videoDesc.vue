@@ -28,7 +28,6 @@ export default {
     detailList:function (cur,old) {
       this.list = cur
       this.average = cur.rating.average
-      console.log(cur)
     }
   },
   components:{

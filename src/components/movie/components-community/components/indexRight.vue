@@ -41,7 +41,10 @@ export default {
         // );
         this.title = '猜您感兴趣'
         let list = movieName.sort((b,a)=>a.count - b.count)
-        // let list = Object.values(movieName).sort((a,b)=>a-b)
+        let params = {
+          movieName: list[0].name
+        };
+         // let list = Object.values(movieName).sort((a,b)=>a-b)
         // let like = "";
         // if (list[0] === "love") {
         //   like = "爱情";
@@ -50,9 +53,6 @@ export default {
         // } else if (list[0] === "comic") {
         //   like = "喜剧";
         // }
-        let params = {
-          movieName: list[0].name
-        };
         axios.post("/local/login/queryMovieName", params).then(response => {
           this.list = response.data;
         });

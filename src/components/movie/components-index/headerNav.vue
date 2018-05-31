@@ -5,7 +5,7 @@
         <router-link to="/">首页</router-link>
         <div>
           <p>猜您想看:</p>
-          <p v-for="(item,index) in list " :key="index">{{item.name}}</p>
+          <p v-for="(item,index) in list " :key="index">{{item.title}}</p>
         </div>
         <router-link to="/community/" @click.native="valiLogin()">影评社区</router-link>
       </ul>
@@ -24,20 +24,39 @@ export default {
   created () {
     this.getInterest()
   },
+  watch:{
+    list:function(cur,old){
+      this.list = cur
+    }
+  },
   methods:{
     getInterest:function(){
+      var that = this
       const account = sessionStorage.getItem('account')
       if (account) {
         let params = {
           account : account
         }
+        let arr = []
+        let interestRec = ''
         axios.post('/local/login/queryInterest',params)
           .then((response) => {
             // console.log(response.data)
-            this.list = response.data.sort((a,b)=>b.count-a.count).splice(0,2)
-        })
-      } else {
-
+            interestRec = response.data.sort((a,b)=>b.count-a.count).splice(0,1)
+        }).then(()=>{
+          let name = interestRec[0].genres[0]
+          axios.get(`/v2/movie/search?q=${name}`)
+          .then((response) => {
+            let datalist = response.data.subjects.splice(0,2)
+            for (const data of datalist) {
+              arr.push({title:data.title})
+            }
+            // console.log(arr)
+          }).then(()=>{
+            this.list = arr
+          })
+        }
+        )
       }
     },
     valiLogin:function(){
