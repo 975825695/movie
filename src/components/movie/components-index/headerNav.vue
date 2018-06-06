@@ -39,21 +39,36 @@ export default {
         }
         let arr = []
         let interestRec = ''
-        axios.post('/local/login/queryInterest',params)
+        // axios.post('/local/login/queryInterest',params)
+        //   .then((response) => {
+        //     // console.log(response.data)
+        //     interestRec = response.data.sort((a,b)=>b.count-a.count).splice(0,1)
+        // })
+        axios.post('/local/login/queryInterest2',params)
           .then((response) => {
-            // console.log(response.data)
-            interestRec = response.data.sort((a,b)=>b.count-a.count).splice(0,1)
-        }).then(()=>{
+            interestRec = response.data
+            // interestRec = response.data.sort((a,b)=>b.count-a.count).splice(0,1)
+        })
+        .then(()=>{
           let name = interestRec[0].genres[0]
           axios.get(`/v2/movie/search?q=${name}`)
           .then((response) => {
-            let datalist = response.data.subjects.splice(0,2)
-            for (const data of datalist) {
-              arr.push({title:data.title})
-            }
+            let datalist = response.data.subjects.splice(0,1)
+              arr.push({title:datalist[0].title})
             // console.log(arr)
           }).then(()=>{
-            this.list = arr
+            let name = interestRec[1].genres[0]
+            axios.get(`/v2/movie/search?q=${name}`)
+            .then((response) => {
+            let datalist = response.data.subjects.splice(0,1)
+
+              arr.push({title:datalist[0].title})
+            // console.log(arr)
+            })
+          }).then(()=>{
+            //  this.list = new Set([...arr])
+             this.list = [...new Set(arr)]
+            //  console.log(this.list)
           })
         }
         )

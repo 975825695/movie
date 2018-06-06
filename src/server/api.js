@@ -388,6 +388,47 @@ router.post('/local/login/queryInterest',(req,res) => {
       }
   });
 });
+// 第二种算法
+router.post('/local/login/queryInterest2',(req,res) => {
+  let newAccount = {
+    account : req.body.account
+  };
+  models.Login.findOne(newAccount,(err,data) => {
+      if (err) {
+          res.send(err);
+      } else {
+        let interest = data.interestRec.sort((a,b)=>b.count-a.count).splice(0,1)
+
+        models.Login.find({$where:`parseInt(this.account) !== parseInt(${req.body.account})`},(err,data)=>{
+          function testRec(array,rec){
+            let list = []
+            for (let index = 0; index < array.length; index++) {
+              for (let i = 0; i < array[index].interestRec.length; i++) {
+                for (let j = 0; j < array[index].interestRec[i].genres.length; j++) {
+                  // let rec = '剧情'
+                  let temp = 0
+                  if (array[index].interestRec[i].genres[j].indexOf(rec) !== -1) {
+                    if (array[index].interestRec[i].count>temp) {
+                      temp =array[index].interestRec[i].count
+                      list = array[index]
+                    }
+                  }
+                  // if ( rec.test(array[index].interestRec[i].genres[j])) {
+                  //   list.push(array[index])
+                  // }
+                }
+              }
+            }
+            // return new Set([...list])
+            return list
+          }
+          let list = testRec(data,interest[0].genres[0]).interestRec
+          list = list.sort((a,b)=>b.count-a.count).splice(0,2)
+          res.send(list)
+        })
+      }
+  });
+});
 
 // 根据兴趣推荐查询相关文章
 router.post('/local/login/queryUserLike',(req,res) => {
